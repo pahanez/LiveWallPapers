@@ -199,7 +199,9 @@ public class CustomWallPaperService extends WallpaperService {
          */
         void drawLine(Canvas c, int x1, int y1, int z1, int x2, int y2, int z2) {
             long now = SystemClock.elapsedRealtime();
-            float xrot = ((float)(now - mStartTime)) / 1000;
+            float xrot = 233;
+            if(now%10 != 0)
+            	xrot = ((float)(now - mStartTime)) / 1000;
             float yrot = (0.5f - mOffset) * 2.0f;
             float zrot = 0;
 
