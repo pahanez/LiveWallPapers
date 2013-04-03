@@ -16,8 +16,13 @@
 
 package com.pahanez.mywall;
 
+import android.graphics.BlurMaskFilter;
+import android.graphics.BlurMaskFilter.Blur;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.service.wallpaper.WallpaperService;
@@ -47,7 +52,7 @@ public class CustomWallPaperService extends WallpaperService {
     }
 
     class CubeEngine extends Engine {
-
+    	private final Paint mShaderPaint = new Paint();
         private final Paint mPaint = new Paint();
         private float mOffset;
         private float mTouchX = -1;
@@ -71,7 +76,11 @@ public class CustomWallPaperService extends WallpaperService {
             paint.setStrokeWidth(2);
             paint.setStrokeCap(Paint.Cap.ROUND);
             paint.setStyle(Paint.Style.STROKE);
-
+            
+            paint.setMaskFilter(new BlurMaskFilter(2, Blur.NORMAL));
+//            mShaderPaint.setMaskFilter(new BlurMaskFilter(15, Blur.SOLID));
+//            mShaderPaint.setShader(new LinearGradient(8f, 80f, 30f, 20f, Color.RED,Color.WHITE, Shader.TileMode.MIRROR));
+            
             mStartTime = SystemClock.elapsedRealtime();
         }
 
@@ -157,6 +166,7 @@ public class CustomWallPaperService extends WallpaperService {
                     // draw something
                     drawCube(c);
                     drawTouchPoint(c);
+//                    drawForeground(c);
                 }
             } finally {
                 if (c != null) holder.unlockCanvasAndPost(c);
@@ -169,7 +179,15 @@ public class CustomWallPaperService extends WallpaperService {
             }
         }
 
-        /*
+        private void drawForeground(Canvas c) {
+			c.save();
+			c.drawCircle(200, 400, 500, mShaderPaint);
+			c.drawRect(getWallpaper().getBounds(), mShaderPaint);
+			
+			c.restore();
+		}
+
+		/*
          * Draw a wireframe cube by drawing 12 3 dimensional lines between
          * adjacent corners of the cube
          */
@@ -200,7 +218,7 @@ public class CustomWallPaperService extends WallpaperService {
         void drawLine(Canvas c, int x1, int y1, int z1, int x2, int y2, int z2) {
             long now = SystemClock.elapsedRealtime();
             float xrot = 233;
-            if(now%10 != 0)
+            if(now%100 != 0)
             	xrot = ((float)(now - mStartTime)) / 1000;
             float yrot = (0.5f - mOffset) * 2.0f;
             float zrot = 0;
@@ -233,6 +251,8 @@ public class CustomWallPaperService extends WallpaperService {
          */
         void drawTouchPoint(Canvas c) {
             if (mTouchX >=0 && mTouchY >= 0) {
+            	c.drawLine(0, mTouchY, c.getWidth(), mTouchY, mPaint);
+            	c.drawLine(mTouchX, 0, mTouchX, c.getHeight(), mPaint);
                 c.drawCircle(mTouchX, mTouchY, 80, mPaint);
             }
         }
