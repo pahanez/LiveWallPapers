@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <SeekBar
+        android:id="@+id/textsize_settings_seekbar"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/settings_main_item_height"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/textsize_settings_rb_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Min" />
+
+        <RadioButton
+            android:id="@+id/textsize_settings_rb_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/textsize_settings_random_cb"
+        android:text="@string/random_textsize_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

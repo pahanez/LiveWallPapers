@@ -4,5 +4,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
-
+    <string name="random_color_tv">Random color</string>
+	<!--TextSize  -->
+    <string name="random_textsize_tv">Random textsize</string>
+    <string name="textsize_tv">Textsize settings</string>
+    <string name="textsize">Text size</string>
+    <!--/TextSize  -->
 </resources>

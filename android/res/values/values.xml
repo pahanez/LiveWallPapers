@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="devider_height">1dp</dimen>
+    
+    <dimen name="settings_main_item_height">70dp</dimen>
+    
+    <!--check_box  -->
+    <dimen name="checkbox_margin_left_right">15dp</dimen>
+    <!--/check_box  -->
+    
+    <!--textview  -->
+    <dimen name="textview_text_size">24dp</dimen>
+    <dimen name="textview_margin_left">20dp</dimen>
+    <!--/textview  -->
+</resources>

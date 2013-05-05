@@ -1,5 +1,34 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme.Light" />
+
+    <style name="devider">
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="checkbox_settings">
+        <item name="android:layout_marginLeft">@dimen/checkbox_margin_left_right</item>
+        <item name="android:layout_marginRight">@dimen/checkbox_margin_left_right</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="textview_settings">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/textview_text_size</item>
+        <item name="android:layout_marginLeft">@dimen/textview_margin_left</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="clickable_textview_settings">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/textview_text_size</item>
+        <item name="android:paddingLeft">@dimen/textview_margin_left</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@android:drawable/list_selector_background</item>
+    </style>
 
 </resources>
