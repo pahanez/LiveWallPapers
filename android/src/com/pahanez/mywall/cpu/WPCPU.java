@@ -21,7 +21,7 @@ public final class WPCPU {
 
 
 	// **********constant section***********//
-	private static final int BUFFER_SIZE 		= 	16000;
+	private static final int BUFFER_SIZE 		= 	4096;
 	// **********public interface***********//
 	public static final synchronized WPCPU getInstance() {
 		return (mInstance == null ? mInstance = new WPCPU() : mInstance);
@@ -44,16 +44,21 @@ public final class WPCPU {
 			String line = "";
 			int i = 0;
 			while ((line = in.readLine()) != null) {
-				if(i > 6){ // skip lines which we needn't
-				String[] tmpStr = line.split(" ");
+				if(i > 6){/* // skip lines which we needn't
+				String[] tmpStr = line.split(" "); 
 					for(int ik = 0; ik < tmpStr.length; ik++)
 						if(tmpStr[ik].contains("%")){
 					ProcessItem item = new ProcessItem();
+					item.setFullData(line);
 					item.setProcessPID(line.substring(0, 5).trim());
 					item.setProcessCPUusage(tmpStr[ik]);
 					item.setProcessName(tmpStr[tmpStr.length - 1]);
 					mProcessList.add(item);
 						}
+				*/ // GC reduce
+					ProcessItem item = new ProcessItem();
+					item.setFullData(line);
+					mProcessList.add(item);
 				}
 				i++;
 			}

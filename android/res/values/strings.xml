@@ -6,8 +6,30 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="random_color_tv">Random color</string>
 	<!--TextSize  -->
-    <string name="random_textsize_tv">Random textsize</string>
-    <string name="textsize_tv">Textsize settings</string>
+    <string name="random_textsize_tv">Random Text Size</string>
+    <string name="textsize_tv">Text Size</string>
+    <string name="background_color_picker_tv">Background Color</string>
+    <string name="text_color_picker_tv">Text Color</string>
     <string name="textsize">Text size</string>
+    <string name="textsize_min">MIN</string>
+    <string name="textsize_max">MAX</string>
     <!--/TextSize  -->
+    <!--FrameRate  -->
+    <string name="frame_rate_tv">Frame Rate</string>
+    <string name="value_tv">Value</string>
+    <!--/FrameRate  -->
+    <!--Element Count  -->
+    <string name="element_count_tv">Elements per Frame</string>
+    <!--/Element Count  -->
+    <!-- Data Type  -->
+    <string name="data_type_name">Choose Data Type</string>
+    <string name="cpu_loading">Loading...</string>
+    <string name="choose_file">Choose file</string>
+    
+    <string-array name="data_type_values">
+        <item>CPU</item>
+        <item>Time</item>
+        <item>Custom file</item>
+    </string-array>
+    <!--/Data Type  -->
 </resources>

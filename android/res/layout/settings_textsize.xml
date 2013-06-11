@@ -4,33 +4,82 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <SeekBar
-        android:id="@+id/textsize_settings_seekbar"
-        android:layout_width="275dp"
-        android:layout_height="wrap_content" />
-
-    <RadioGroup
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/settings_main_item_height"
-        android:orientation="horizontal" >
+        android:layout_height="@dimen/settings_main_item_height" 
+        >
 
-        <RadioButton
-            android:id="@+id/textsize_settings_rb_min"
+        <TextView
+            android:id="@+id/min_size_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/checkbox_margin_left_right"
+            android:gravity="center_vertical"
+            android:text="@string/textsize_min"
+            android:textSize="@dimen/textview_text_size" />
+
+        <SeekBar
+            android:id="@+id/textsize_min_settings_seekbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Min" />
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/min_size_textview"
+            android:layout_toLeftOf="@+id/min_val_tv"
+            android:paddingLeft="@dimen/checkbox_margin_left_right"
+            android:paddingRight="@dimen/checkbox_margin_left_right" />
+        
+        <TextView
+            android:id="@+id/min_val_tv"
+            android:layout_width="@dimen/textview_text_size_value_width"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="9"
+            android:textSize="@dimen/textview_text_size" />
+    </RelativeLayout>
+    
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/settings_main_item_height" 
+        android:id="@+id/min_val_layout"
+        
+        >
 
-        <RadioButton
-            android:id="@+id/textsize_settings_rb_max"
+        <TextView
+            android:id="@+id/max_size_textview"
             android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/checkbox_margin_left_right"
+            android:gravity="center_vertical"
+            android:text="@string/textsize_max"
+            android:textSize="@dimen/textview_text_size" />
+
+        <SeekBar
+            android:id="@+id/textsize_max_settings_seekbar"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Max" />
-    </RadioGroup>
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/max_size_textview"
+            android:layout_toLeftOf="@+id/max_val_tv"
+            android:paddingLeft="@dimen/checkbox_margin_left_right"
+            android:paddingRight="@dimen/checkbox_margin_left_right" />
+         <TextView
+            android:id="@+id/max_val_tv"
+            android:layout_width="@dimen/textview_text_size_value_width"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:text="999"
+            android:textSize="@dimen/textview_text_size" />
+        
+    </RelativeLayout>
 
-    <CheckBox
-        android:id="@+id/textsize_settings_random_cb"
-        android:text="@string/random_textsize_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+   
 
+    
+    
 </LinearLayout>

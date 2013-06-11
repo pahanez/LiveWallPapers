@@ -4,6 +4,7 @@ public class ProcessItem {
 	private String 	processPID;
 	private String 	processName;
 	private String	processCPUusage;
+	private String mFullData;
 	public String getProcessPID() {
 		return processPID;
 	}
@@ -21,6 +22,12 @@ public class ProcessItem {
 	}
 	public void setProcessCPUusage(String processCPUusage) {
 		this.processCPUusage = processCPUusage;
+	}
+	public String getFullData() {
+		return mFullData;
+	}
+	public void setFullData(String mFullData) {
+		this.mFullData = mFullData;
 	}
 
 

@@ -34,5 +34,11 @@ public class WLog {
 			Log.w(tag, msg);
 		}
 	}
+	
+	public static final void e(String msg){
+		if(LOG_LEVEL >= Log.ERROR){
+			Log.e("!DEBUG!", msg);
+		}
+	}
 
 }

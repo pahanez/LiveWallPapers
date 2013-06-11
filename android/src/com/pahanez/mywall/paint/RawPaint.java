@@ -3,7 +3,7 @@ package com.pahanez.mywall.paint;
 import android.graphics.Paint;
 
 public abstract class RawPaint {
-	protected Paint mPaint = new Paint();
+	protected Paint mPaint;
 	
 	public Paint getPaint(){
 		return initPaint().setShaders().setTextSize().setColor().build();

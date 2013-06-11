@@ -6,10 +6,22 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
+            <TextView
+                android:id="@+id/type_of_data_tv"
+                style="@style/clickable_textview_settings"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/settings_main_item_height"
+                android:text="@string/data_type_name" />
+
+            <ImageView
+                style="@style/devider"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/devider_height" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="@dimen/settings_main_item_height" >
+
 
             <TextView
                 android:id="@+id/random_color_textview"
@@ -34,6 +46,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent" />
         </RelativeLayout>
+
+        <ImageView
+            style="@style/devider"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/devider_height" />
+
+        <TextView
+            android:id="@+id/text_color_picker_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/text_color_picker_tv" />
 
         <ImageView
             style="@style/devider"
@@ -75,31 +99,51 @@
 
         <TextView
             android:id="@+id/textsize_tv"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/settings_main_item_height" 
-            android:text="@string/textsize_tv"
             style="@style/clickable_textview_settings"
-            />
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/textsize_tv" />
 
         <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/devider_height" />
-        
-         <TextView
-            android:id="@+id/textsize_tv"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/settings_main_item_height" 
-            android:text="@string/textsize_tv"
+
+        <TextView
+            android:id="@+id/background_color_picker_tv"
             style="@style/clickable_textview_settings"
-            />
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/background_color_picker_tv" />
 
         <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/devider_height" />
-        
-        
+
+        <TextView
+            android:id="@+id/frame_rate_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/frame_rate_tv" />
+
+        <ImageView
+            style="@style/devider"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/devider_height" />
+
+        <TextView
+            android:id="@+id/element_count_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/element_count_tv" />
+
+        <ImageView
+            style="@style/devider"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/devider_height" />
     </LinearLayout>
 
 </ScrollView>
