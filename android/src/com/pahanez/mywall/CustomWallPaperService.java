@@ -27,8 +27,9 @@ public class CustomWallPaperService extends WallpaperService {
 
 	private Time mTime = new Time(System.currentTimeMillis());
 	private final Handler mHandler = new Handler();
-	private Color mBackgroundColor;
-
+	private WallController mController;
+	private Settings mSettings;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -116,17 +117,19 @@ public class CustomWallPaperService extends WallpaperService {
 			super.onSurfaceCreated(holder);
 		}
 		private void startApp(){
-			WallController.getInstance().startPaintLoop();
+			mController = WallController.getInstance();
+			mSettings = Settings.getInstance();
+			mController.startPaintLoop();
 			
-			switch (Settings.getInstance().getDataTypeValue()) {
+			switch (mSettings.getDataTypeValue()) {
 			case WConstants.CPU_TYPE:
-				WallController.getInstance().startCpuLoop();
+				mController.startCpuLoop();
 				break;
 			case WConstants.TIME_TYPE:
 				
 				break;
 			case WConstants.FILE_TYPE:
-				WallController.getInstance().cacheExternalFileData();
+				mController.cacheExternalFileData();
 				break;
 
 			default:
@@ -150,7 +153,7 @@ public class CustomWallPaperService extends WallpaperService {
 			WLog.v(TAG, "onSurfaceDestroyed");
 			mVisible = false;
 			mHandler.removeCallbacks(mDrawCube);
-			// WallController.getInstance().destroy();
+			// mController.destroy();
 		}
 
 		@Override
@@ -214,25 +217,25 @@ public class CustomWallPaperService extends WallpaperService {
 			// Reschedule the next redraw
 			mHandler.removeCallbacks(mDrawCube);
 			if (mVisible) {
-				mHandler.postDelayed(mDrawCube, 1000 / Settings.getInstance().getFrameRate());
+				mHandler.postDelayed(mDrawCube, 1000 / mSettings.getFrameRate());
 			}
 		}
 
 		private void draw() {
 //			mTime.setTime(System.currentTimeMillis());
-			mCanvas.drawColor(Settings.getInstance().getCustomBackgroundColor());
-			switch (Settings.getInstance().getDataTypeValue()) {
+			mCanvas.drawColor(mSettings.getCustomBackgroundColor());
+			switch (mSettings.getDataTypeValue()) {
 			case WConstants.CPU_TYPE:
-				for (int i = 0; i < Settings.getInstance().getElementsPerFrame(); i++)
-					mCanvas.drawText(WallController.getInstance().getRandomCpuItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/WallController.getInstance().getPaint());
+				for (int i = 0; i < mSettings.getElementsPerFrame(); i++)
+					mCanvas.drawText(mController.getRandomCpuItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/mController.getPaint());
 				break;
 			case WConstants.TIME_TYPE:
-				for (int i = 0; i < Settings.getInstance().getElementsPerFrame(); i++)
-					mCanvas.drawText(mTimeValue, WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/WallController.getInstance().getPaint());
+				for (int i = 0; i < mSettings.getElementsPerFrame(); i++)
+					mCanvas.drawText(mTimeValue, WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/mController.getPaint());
 				break;
 			case WConstants.FILE_TYPE:
-				for (int i = 0; i < Settings.getInstance().getElementsPerFrame(); i++)
-					mCanvas.drawText(WallController.getInstance().getRandomFileItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/WallController.getInstance().getPaint());
+				for (int i = 0; i < mSettings.getElementsPerFrame(); i++)
+					mCanvas.drawText(mController.getRandomFileItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/mController.getPaint());
 				break;
 
 			default:

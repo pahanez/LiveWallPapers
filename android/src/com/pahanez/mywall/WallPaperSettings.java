@@ -6,17 +6,22 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
@@ -39,10 +44,11 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	private static final int FRAMERATE_DIALOG = 102;
 	private static final int ELEMENT_COUNT = 103;
 	private static final int DATA_TYPE_DIALOG = 104;
-	private static final int MAX_TEXT_SIZE = 150;
-	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mFrameRateTV, mElementCount, mDataTypeTV;
+	private static final int FONTS_DIALOG = 105;
+	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mFrameRateTV, mElementCountTV, mDataTypeTV, mFontsTV;
 	private CheckBox mRandomColorCB, mRandomTextSizeCB;
 	private ListView mListView;
+	private Settings mSettings;
 	// textsizesettings
 	private SeekBar mTextSettingsMinSeekBar, mTextSettingsMaxSeekBar, mSeekBar;
 	private TextView mTextValueMin, mTextValueMax, mTextSettingsMin, mSeekValue;
@@ -51,7 +57,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings);
-
+		mSettings = Settings.getInstance();
 	}
 
 	@Override
@@ -62,15 +68,19 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	}
 
 	private void initUI() {
-		mTextSizeTV = (TextView) findViewById(R.id.type_of_data_tv);
-		mTextSizeTV.setOnClickListener(this);
+
+		mFontsTV = (TextView) findViewById(R.id.fonts_tv);
+		mFontsTV.setOnClickListener(this);
+
+		mDataTypeTV = (TextView) findViewById(R.id.type_of_data_tv);
+		mDataTypeTV.setOnClickListener(this);
 
 		mRandomColorCB = (CheckBox) findViewById(R.id.random_color_checkbox);
-		mRandomColorCB.setChecked(Settings.getInstance().isRandomColor());
+		mRandomColorCB.setChecked(mSettings.isRandomColor());
 		mRandomColorCB.setOnCheckedChangeListener(this);
 
 		mRandomTextSizeCB = (CheckBox) findViewById(R.id.random_textsize_checkbox);
-		mRandomTextSizeCB.setChecked(Settings.getInstance().isRandomTextSize());
+		mRandomTextSizeCB.setChecked(mSettings.isRandomTextSize());
 		mRandomTextSizeCB.setOnCheckedChangeListener(this);
 
 		mTextSizeTV = (TextView) findViewById(R.id.textsize_tv);
@@ -82,23 +92,23 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		mFrameRateTV = (TextView) findViewById(R.id.frame_rate_tv);
 		mFrameRateTV.setOnClickListener(this);
 
-		mElementCount = (TextView) findViewById(R.id.element_count_tv);
-		mElementCount.setOnClickListener(this);
+		mElementCountTV = (TextView) findViewById(R.id.element_count_tv);
+		mElementCountTV.setOnClickListener(this);
 
 		mTextColorPickerTV = (TextView) findViewById(R.id.text_color_picker_tv);
 		mTextColorPickerTV.setOnClickListener(this);
-		mTextColorPickerTV.setEnabled(!Settings.getInstance().isRandomColor());
+		mTextColorPickerTV.setEnabled(!mSettings.isRandomColor());
 	}
 
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
 		case R.id.random_color_checkbox:
-			Settings.getInstance().setRandomColor(isChecked);
-			mTextColorPickerTV.setEnabled(!Settings.getInstance().isRandomColor());
+			mSettings.setRandomColor(isChecked);
+			mTextColorPickerTV.setEnabled(!mSettings.isRandomColor());
 			break;
 		case R.id.random_textsize_checkbox:
-			Settings.getInstance().setRandomTextSize(isChecked);
+			mSettings.setRandomTextSize(isChecked);
 			break;
 		default:
 			break;
@@ -115,7 +125,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			showDialog(DATA_TYPE_DIALOG);
 			break;
 		case R.id.background_color_picker_tv:
-			ColorPickerDialog mBackgroundColorDialog = new ColorPickerDialog(this, Settings.getInstance().getCustomBackgroundColor());
+			ColorPickerDialog mBackgroundColorDialog = new ColorPickerDialog(this, mSettings.getCustomBackgroundColor());
 			mBackgroundColorDialog.setOnColorChangedListener(this);
 			mBackgroundColorDialog.setId(WConstants.BACKGROUNG_COLOR_DIALOG);
 			mBackgroundColorDialog.setAlphaSliderVisible(true);
@@ -123,7 +133,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 			break;
 		case R.id.text_color_picker_tv:
-			ColorPickerDialog mTextColorDialog = new ColorPickerDialog(this, Settings.getInstance().getCustomTextColor());
+			ColorPickerDialog mTextColorDialog = new ColorPickerDialog(this, mSettings.getCustomTextColor());
 			mTextColorDialog.setOnColorChangedListener(this);
 			mTextColorDialog.setId(WConstants.TEXT_COLOR_DIALOG);
 			mTextColorDialog.setAlphaSliderVisible(true);
@@ -136,6 +146,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			break;
 		case R.id.element_count_tv:
 			showDialog(ELEMENT_COUNT);
+			break;
+		case R.id.fonts_tv:
+			showDialog(FONTS_DIALOG);
 			break;
 
 		default:
@@ -186,19 +199,84 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		case DATA_TYPE_DIALOG:
 			WLog.i(TAG, "DATA_TYPE_DIALOG");
 			adb.setTitle(getString(R.string.data_type_name));
-			View viewDataType = (LinearLayout) getLayoutInflater().inflate(R.layout.spinner_layout, null);
+			View viewDataType = (LinearLayout) getLayoutInflater().inflate(R.layout.list_layout, null);
 			adb.setView(viewDataType);
 			mListView = (ListView) viewDataType.findViewById(R.id.custom_list);
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.data_type_values));
+			ArrayAdapter<String> adapterDataTypes = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.data_type_values));
 			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-			// adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			mListView.setAdapter(adapter);
+			mListView.setAdapter(adapterDataTypes);
+			return adb.create();
+		case FONTS_DIALOG:
+			WLog.i(TAG, "FONTS_DIALOG");
+			adb.setTitle(getString(R.string.fonts_menu));
+			View viewFont = (LinearLayout) getLayoutInflater().inflate(R.layout.list_layout, null);
+			adb.setView(viewFont);
+			mListView = (ListView) viewFont.findViewById(R.id.custom_list);
+			
 			return adb.create();
 
 		default:
 			break;
 		}
 		return null;
+	}
+
+	private class CustomAdapter extends ArrayAdapter<String> {
+		private LayoutInflater mInflater;
+		private String[] mValues;
+
+		public CustomAdapter(Context context, int textViewResourceId, String[] objects) {
+			super(context, textViewResourceId, objects);
+			mInflater = getLayoutInflater();
+			mValues = objects;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			CheckedTextView ctv;
+			if (convertView == null) {
+				View view = mInflater.inflate(android.R.layout.simple_list_item_single_choice, null);
+				ctv = (CheckedTextView) view.findViewById(android.R.id.text1);
+				convertView = view;
+			} else
+				ctv = (CheckedTextView) convertView.findViewById(android.R.id.text1);
+			Typeface tmpTypeFace;
+			switch (position) {
+			case 0:
+				tmpTypeFace = Typeface.DEFAULT;
+				break;
+			case 1:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("spectrumsmudged.ttf");
+				break;
+			case 2:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("merchant.ttf");
+				break;
+			case 3:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("codeman.ttf");
+				break;
+			case 4:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("5X5basic.ttf");
+				break;
+			case 5:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("advocut.ttf");
+				break;
+			case 6:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("arcade.ttf");
+				break;
+			case 7:
+				tmpTypeFace = WallController.getInstance().getCustomTypeface("xspace.ttf");
+				break;
+
+			default:
+				tmpTypeFace = Typeface.DEFAULT;
+				break;
+			}
+			ctv.setTypeface(tmpTypeFace);
+			ctv.setHeight((int)getResources().getDimension(R.dimen.settings_main_item_height));
+			ctv.setText(mValues[position]);
+			return convertView;
+		}
+
 	}
 
 	@Override
@@ -210,42 +288,42 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 				@Override
 				public void onDismiss(DialogInterface dialog) {
-					Settings.getInstance().setMaxTextSize(mTextSettingsMaxSeekBar.getProgress());
-					Settings.getInstance().setMinTextSize(mTextSettingsMinSeekBar.getProgress());
+					mSettings.setMaxTextSize(mTextSettingsMaxSeekBar.getProgress());
+					mSettings.setMinTextSize(mTextSettingsMinSeekBar.getProgress());
 				}
 			});
-			if (Settings.getInstance().isRandomTextSize()) {
+			if (mSettings.isRandomTextSize()) {
 				dialog.findViewById(R.id.min_val_layout).setVisibility(View.VISIBLE);
 
-				mTextSettingsMaxSeekBar.setProgress((int) Settings.getInstance().getMaxTextSize());
-				mTextSettingsMinSeekBar.setProgress((int) Settings.getInstance().getMinTextSize());
-				mTextValueMin.setText(String.valueOf((int) Settings.getInstance().getMinTextSize()));
-				mTextValueMax.setText(String.valueOf((int) Settings.getInstance().getMaxTextSize()));
+				mTextSettingsMaxSeekBar.setProgress((int) mSettings.getMaxTextSize());
+				mTextSettingsMinSeekBar.setProgress((int) mSettings.getMinTextSize());
+				mTextValueMin.setText(String.valueOf((int) mSettings.getMinTextSize()));
+				mTextValueMax.setText(String.valueOf((int) mSettings.getMaxTextSize()));
 				mTextSettingsMin.setText(getString(R.string.textsize_min));
 			} else {
 				dialog.findViewById(R.id.min_val_layout).setVisibility(View.GONE);
 				mTextSettingsMin.setText(getString(R.string.textsize));
-				mTextSettingsMinSeekBar.setProgress((int) Settings.getInstance().getMinTextSize());
-				mTextValueMin.setText(String.valueOf((int) Settings.getInstance().getMinTextSize()));
+				mTextSettingsMinSeekBar.setProgress((int) mSettings.getMinTextSize());
+				mTextValueMin.setText(String.valueOf((int) mSettings.getMinTextSize()));
 			}
 
 			break;
 		case FRAMERATE_DIALOG:
 			mSeekBar.setTag(FRAMERATE_DIALOG);
-			mSeekBar.setProgress(Settings.getInstance().getFrameRate());
-			mSeekValue.setText(String.valueOf(Settings.getInstance().getFrameRate()));
+			mSeekBar.setProgress(mSettings.getFrameRate());
+			mSeekValue.setText(String.valueOf(mSettings.getFrameRate()));
 			break;
 		case ELEMENT_COUNT:
 			mSeekBar.setTag(ELEMENT_COUNT);
-			mSeekBar.setProgress(Settings.getInstance().getElementsPerFrame());
-			mSeekValue.setText(String.valueOf(Settings.getInstance().getElementsPerFrame()));
+			mSeekBar.setProgress(mSettings.getElementsPerFrame());
+			mSeekValue.setText(String.valueOf(mSettings.getElementsPerFrame()));
 			break;
 		case DATA_TYPE_DIALOG:
-			mListView.setItemChecked(Settings.getInstance().getDataTypeValue(), true);
+			mListView.setItemChecked(mSettings.getDataTypeValue(), true);
 			mListView.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					switch (position) {
 					case WConstants.CPU_TYPE:
 						WallController.getInstance().startCpuLoop();
@@ -255,47 +333,93 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 						break;
 					case WConstants.FILE_TYPE:
 						WallController.getInstance().stopCpuLoop();
-						
-					    Intent target = FileUtils.createGetContentIntent();
-					    target.setType("text/*");
-					    Intent intent = Intent.createChooser(target, getString(R.string.choose_file));
-					    try {
-					        startActivityForResult(intent, DATA_TYPE_REQUEST_CODE);
-					    } catch (ActivityNotFoundException e) {
-					    	e.printStackTrace();
-					    }
-						
+
+						Intent target = FileUtils.createGetContentIntent();
+						target.setType("text/*");
+						Intent intent = Intent.createChooser(target, getString(R.string.choose_file));
+						try {
+							startActivityForResult(intent, DATA_TYPE_REQUEST_CODE);
+						} catch (ActivityNotFoundException e) {
+							e.printStackTrace();
+						}
+
 						break;
 
 					default:
 						break;
 					}
-					Settings.getInstance().setDataType(position);
+					mSettings.setDataType(position);
 					dialog.cancel();
 				}
 			});
 			break;
+		case FONTS_DIALOG:
+			ArrayAdapter<String> adapterFonts = new CustomAdapter(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_values));
+			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+			mListView.setAdapter(adapterFonts);
+			mListView.setItemChecked(mSettings.getFontValue(), true);
+			mListView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					switch (position) {
+					case 0:
+						mSettings.setFont(null);
+						break;
+					case 1:
+						mSettings.setFont("spectrumsmudged.ttf");
+						break;
+					case 2:
+						mSettings.setFont("merchant.ttf");
+						break;
+					case 3:
+						mSettings.setFont("codeman.ttf");
+						break;
+					case 4:
+						mSettings.setFont("5X5basic.ttf");
+						break;
+					case 5:
+						mSettings.setFont("advocut.ttf");
+						break;
+					case 6:
+						mSettings.setFont("arcade.ttf");
+						break;
+					case 7:
+						mSettings.setFont("xspace.ttf");
+						break;
+
+					default:
+						break;
+					}
+					WallController.getInstance().setCurrentTypeFace();
+					mSettings.setFontValue(position);
+					dialog.cancel();
+				}
+			});
+
+			break;
+			
 
 		default:
 			break;
 		}
 		super.onPrepareDialog(id, dialog);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		WLog.e(TAG,"" + requestCode + " , " + resultCode + " , ");
-		 switch (requestCode) {
-		    case DATA_TYPE_REQUEST_CODE:  
-		        if (resultCode == RESULT_OK) {  
-		            // The URI of the selected file 
-		            final Uri uri = data.getData();
-		            // Create a File from this Uri
-		            File file = FileUtils.getFile(uri);
-		            Settings.getInstance().setExternalFilePath(file.getAbsolutePath());
-		            WallController.getInstance().cacheExternalFileData();
-		        }
-		    }
+		WLog.e(TAG, "" + requestCode + " , " + resultCode + " , ");
+		switch (requestCode) {
+		case DATA_TYPE_REQUEST_CODE:
+			if (resultCode == RESULT_OK) {
+				// The URI of the selected file
+				final Uri uri = data.getData();
+				// Create a File from this Uri
+				File file = FileUtils.getFile(uri);
+				mSettings.setExternalFilePath(file.getAbsolutePath());
+				WallController.getInstance().cacheExternalFileData();
+			}
+		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -304,7 +428,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		switch (seekBar.getId()) {
 		case R.id.textsize_min_settings_seekbar:
 			if (mTextSettingsMaxSeekBar.getProgress() < progress) {
-				// if(Settings.getInstance().isRandomTextSize())
+				// if(mSettings.isRandomTextSize())
 				mTextSettingsMaxSeekBar.setProgress(progress);
 			}
 			mTextValueMin.setText(String.valueOf(progress));
@@ -336,9 +460,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		if (seekBar.getTag() != null) {
 			if (seekBar.getTag().equals(FRAMERATE_DIALOG)) {
-				Settings.getInstance().setFrameRate(seekBar.getProgress());
+				mSettings.setFrameRate(seekBar.getProgress());
 			} else if (seekBar.getTag().equals(ELEMENT_COUNT)) {
-				Settings.getInstance().setElementsPerFrame(seekBar.getProgress());
+				mSettings.setElementsPerFrame(seekBar.getProgress());
 			}
 		}
 
@@ -348,12 +472,18 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	public void onColorChanged(int id, int color) {
 		switch (id) {
 		case WConstants.BACKGROUNG_COLOR_DIALOG:
-			Settings.getInstance().setCustomBackgroundColor(color);
+			mSettings.setCustomBackgroundColor(color);
 			break;
 		case WConstants.TEXT_COLOR_DIALOG:
-			Settings.getInstance().setCustomTextColor(color);
+			mSettings.setCustomTextColor(color);
 			break;
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		WallController.getInstance().onOptionsChanged();
 	}
 
 }

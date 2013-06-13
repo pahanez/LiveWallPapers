@@ -22,7 +22,10 @@ public class Settings {
 	private static final String CUSTOM_COLOR_BACKGROUND_VALUE = "background_color_value";
 	private static final String CUSTOM_TEXTSIZE_VALUE = "textsize_value";
 	private static final String EXTERNAL_FILE_PATH = "file_path";
+	private static final String FONT = "font";
 	private static final String DATA_TYPE_VALUE = "data_type";
+	private static final String FONT_VALUE = "font_value";
+	private static final int DEFAULT_FONT_VALUE = 0;
 	private static final int DEFAULT_DATA_TYPE_VALUE = 1;
 	private static final int DEFAULT_TEXTSIZE_VALUE = 20;
 	private static final int DEFAULT_FRAME_RATE_VALUE = 30;
@@ -129,17 +132,35 @@ public class Settings {
 	public int getDataTypeValue() {
 		return mSharedPrefs.getInt(DATA_TYPE_VALUE, DEFAULT_DATA_TYPE_VALUE);
 	}
-	
-	public void setExternalFilePath(String path){
+
+	public void setExternalFilePath(String path) {
 		Editor editor = mSharedPrefs.edit();
 		editor.putString(EXTERNAL_FILE_PATH, path);
 		editor.commit();
 	}
-	
-	public String getExternalFilePath(){
+
+	public String getExternalFilePath() {
 		return mSharedPrefs.getString(EXTERNAL_FILE_PATH, null);
 	}
+
+	public int getFontValue() {
+		return mSharedPrefs.getInt(FONT_VALUE, DEFAULT_FONT_VALUE);
+	}
+
+	public void setFontValue(int value) {
+		Editor editor = mSharedPrefs.edit();
+		editor.putInt(FONT_VALUE, value);
+		editor.commit();
+	}
 	
-	
+	public void setFont(String font) {
+		Editor editor = mSharedPrefs.edit();
+		editor.putString(FONT, font);
+		editor.commit();
+	}
+
+	public String getFont() {
+		return mSharedPrefs.getString(FONT, null);
+	}
 
 }

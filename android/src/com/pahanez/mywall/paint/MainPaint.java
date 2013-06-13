@@ -2,8 +2,10 @@ package com.pahanez.mywall.paint;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import com.pahanez.mywall.WallApplication;
+import com.pahanez.mywall.WallController;
 import com.pahanez.mywall.utils.Settings;
 
 public class MainPaint extends RawPaint{
@@ -12,9 +14,11 @@ public class MainPaint extends RawPaint{
 	public RawPaint initPaint() {
 		mPaint =  new Paint();
 		mPaint.setAntiAlias(true); //wtf
-		mPaint.setStrokeWidth(2); 
-		mPaint.setStrokeCap(Paint.Cap.ROUND);
-		mPaint.setStyle(Paint.Style.STROKE);
+//		mPaint.setStrokeWidth(2); 
+//		mPaint.setStrokeCap(Paint.Cap.ROUND);
+//		mPaint.setStyle(Paint.Style.STROKE);
+//		Typeface myTypeface = Typeface.createFromAsset(WallApplication.getContext().getAssets(), "fonts/spectrumsmudged.ttf");
+		mPaint.setTypeface(WallController.getInstance().getCurrentTypeFace());
 		return this;
 	}
 

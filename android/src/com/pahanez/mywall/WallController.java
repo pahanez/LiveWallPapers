@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -68,7 +69,7 @@ public class WallController {
 	private CopyOnWriteArrayList<ProcessItem> mCpuUsageList = new CopyOnWriteArrayList<ProcessItem>();
 	private CopyOnWriteArrayList<String> mFileDataList = new CopyOnWriteArrayList<String>();
 	private Random mControllerRandom = new Random();
-	
+	private Typeface mCurrentTypeface;
 	private MainPaint mPaint = new MainPaint();
 
 	private void randomPaintArray() {
@@ -99,6 +100,29 @@ public class WallController {
 		} else {
 			return mPaintList.get(mControllerRandom.nextInt(mPaintList.size()));
 		}
+	}
+	
+	public Typeface getCurrentTypeFace(){
+		if(mCurrentTypeface == null){
+			String typefaceName = Settings.getInstance().getFont();
+			if(typefaceName == null)
+				return Typeface.DEFAULT;
+			mCurrentTypeface = Typeface.createFromAsset(WallApplication.getContext().getAssets(), "fonts/"+typefaceName);
+		}
+		return mCurrentTypeface;
+			
+	}
+	
+	public void setCurrentTypeFace(){
+		String typefaceName = Settings.getInstance().getFont();
+		if(typefaceName == null)
+			mCurrentTypeface = Typeface.DEFAULT;
+		else
+			mCurrentTypeface = Typeface.createFromAsset(WallApplication.getContext().getAssets(), "fonts/"+typefaceName);
+	}
+	
+	public Typeface getCustomTypeface(String typefaceName){
+		return Typeface.createFromAsset(WallApplication.getContext().getAssets(), "fonts/"+typefaceName);
 	}
 
 	public void startCpuLoop() {
@@ -146,6 +170,11 @@ public class WallController {
 			return WallApplication.getContext().getString(R.string.cpu_loading);
 		return mFileDataList.get(mControllerRandom.nextInt(mFileDataList.size()));
 	}
+	
+	public void onOptionsChanged(){
+		randomPaintArray();
+	}
+	
 	
 
 }
