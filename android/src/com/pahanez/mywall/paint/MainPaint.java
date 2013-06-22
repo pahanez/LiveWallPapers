@@ -2,7 +2,6 @@ package com.pahanez.mywall.paint;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 
 import com.pahanez.mywall.WallApplication;
 import com.pahanez.mywall.WallController;

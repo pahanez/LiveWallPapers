@@ -1,28 +1,16 @@
 package com.pahanez.mywall;
 
-import java.sql.Time;
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.badlogic.gdx.backends.android.AndroidLiveWallpaperService;
+import com.badlogic.gdx.graphics.GL10;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Shader;
-import android.os.Handler;
-import android.os.SystemClock;
-import android.service.wallpaper.WallpaperService;
-import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-
-import com.pahanez.mywall.paint.MainPaint;
-import com.pahanez.mywall.utils.Settings;
-import com.pahanez.mywall.utils.WLog;
 
 /*
  * This animated wallpaper draws a rotating wireframe cube.
  */
-public class CustomWallPaperService extends WallpaperService {
+/*public class CustomWallPaperService extends WallpaperService {
 	private static final String TAG = CustomWallPaperService.class.getSimpleName();
 
 	private Time mTime = new Time(System.currentTimeMillis());
@@ -171,10 +159,10 @@ public class CustomWallPaperService extends WallpaperService {
 		private int mLegacyPixels;
 
 
-		/*
+		
 		 * Store the position of the touch event so we can use it for drawing
 		 * later
-		 */
+		 
 		@Override
 		public void onTouchEvent(MotionEvent event) {
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
@@ -187,11 +175,11 @@ public class CustomWallPaperService extends WallpaperService {
 			super.onTouchEvent(event);
 		}
 		int tempRadius = 1;
-		/*
+		
 		 * Draw one frame of the animation. This method gets called repeatedly
 		 * by posting a delayed Runnable. You can do any drawing you want in
 		 * here. This example draws a wireframe cube.
-		 */
+		 
 		void drawFrame() {
 			final SurfaceHolder holder = getSurfaceHolder();
 
@@ -200,10 +188,10 @@ public class CustomWallPaperService extends WallpaperService {
 				c = holder.lockCanvas();
 				if (c != null) {
 					// draw something
-					/*c.drawColor(Color.CYAN);
+					c.drawColor(Color.CYAN);
 					c.drawCircle(200, 200, tempRadius++, mOffsetPaint);
 					if(tempRadius > 500)
-						tempRadius = 1;*/ //legacy circle 6% CPU
+						tempRadius = 1; //legacy circle 6% CPU
 					draw();
 					c.drawBitmap(mBitmap, mLegacyPixels, 0, mTimePaint);
 					// c.drawBitmap(mBitmap, mMatrix, mTimePaint);
@@ -227,15 +215,15 @@ public class CustomWallPaperService extends WallpaperService {
 			switch (mSettings.getDataTypeValue()) {
 			case WConstants.CPU_TYPE:
 				for (int i = 0; i < mSettings.getElementsPerFrame(); i++)
-					mCanvas.drawText(mController.getRandomCpuItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/mController.getPaint());
+					mCanvas.drawText(mController.getRandomCpuItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, mPaint.getPaint()mController.getPaint());
 				break;
 			case WConstants.TIME_TYPE:
 				for (int i = 0; i < mSettings.getElementsPerFrame(); i++)
-					mCanvas.drawText(mTimeValue, WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/mController.getPaint());
+					mCanvas.drawText(mTimeValue, WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, mPaint.getPaint()mController.getPaint());
 				break;
 			case WConstants.FILE_TYPE:
 				for (int i = 0; i < mSettings.getElementsPerFrame(); i++)
-					mCanvas.drawText(mController.getRandomFileItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, /*mPaint.getPaint()*/mController.getPaint());
+					mCanvas.drawText(mController.getRandomFileItem(), WallApplication.getRandom().nextInt(880) - 100, WallApplication.getRandom().nextInt(1000) - 100, mPaint.getPaint()mController.getPaint());
 				break;
 
 			default:
@@ -246,4 +234,54 @@ public class CustomWallPaperService extends WallpaperService {
 
 	}
 
+}*/
+public class CustomWallPaperService extends AndroidLiveWallpaperService{
+	@Override
+	public void onCreateApplication() {
+		super.onCreateApplication();
+		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
+		cfg.useGL20 = false;
+		initialize(new ApplicationListener() {
+			
+			@Override
+			public void resume() { 
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void resize(int width, int height) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void render() {
+				// TODO Auto-generated method stub
+				Gdx.gl.glClearColor(1, 0, 1, 1);
+				Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+			}
+			
+			@Override
+			public void pause() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void dispose() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void create() {
+				// TODO Auto-generated method stub
+				
+			}
+		}, cfg);
+	}
+	
+	
+	
 }
