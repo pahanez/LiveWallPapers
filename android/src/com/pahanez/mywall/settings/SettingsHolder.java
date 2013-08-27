@@ -19,7 +19,10 @@ public class SettingsHolder implements OnSettingsChangedListener{
 	@Override
 	public void onSettingsChanged() {
 		isRandomTextColor = mSettings.isRandomTextColor();
-		mCustomTextColor = new Color(mSettings.getCustomTextColor());
+		
+		Color c = new Color(mSettings.getCustomTextColor());
+		mCustomTextColor = new Color(c.g, c.b, c.a, c.r);
+		
 	}
 	
 

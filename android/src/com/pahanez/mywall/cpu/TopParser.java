@@ -61,7 +61,6 @@ public class TopParser {
 		public void fullfilled(ArrayList<String> o) {
 			mData.clear();
 			mData.addAll(o);
-			WLog.e("" + mData.size());
 			try {
 				TimeUnit.SECONDS.sleep(DELAY);
 			} catch (InterruptedException e) {

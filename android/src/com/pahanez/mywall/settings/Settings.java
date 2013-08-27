@@ -3,14 +3,13 @@ package com.pahanez.mywall.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 
 import com.badlogic.gdx.Gdx;
-import com.pahanez.mywall.MainExecutor;
-import com.pahanez.mywall.MainExecutor.Task;
+import com.badlogic.gdx.graphics.Color;
 import com.pahanez.mywall.WConstants;
 import com.pahanez.mywall.WallApplication;
 import com.pahanez.mywall.font.OnFontChangedListener;
+import com.pahanez.mywall.utils.WLog;
 
 public class Settings {
 	private static final String TAG = Settings.class.getSimpleName();
@@ -89,7 +88,7 @@ public class Settings {
 	}
 
 	public int getCustomTextColor() {
-		return mSharedPrefs.getInt(CUSTOM_COLOR_TEXT_VALUE, Color.WHITE);
+		return mSharedPrefs.getInt(CUSTOM_COLOR_TEXT_VALUE, Color.WHITE.toIntBits());
 	}
 
 	public void setCustomBackgroundColor(int value) {
