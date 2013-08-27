@@ -5,6 +5,12 @@
     <style name="devider">
         <item name="android:background">@android:color/darker_gray</item>
     </style>
+    
+    <style name="title_devider">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:textSize">@dimen/textview_text_title_size</item>
+        <item name="android:paddingLeft">@dimen/checkbox_margin_left_right_title</item>
+    </style>
 
     <style name="checkbox_settings">
         <item name="android:layout_marginLeft">@dimen/checkbox_margin_left_right</item>

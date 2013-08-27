@@ -25,7 +25,7 @@
         </service>
 
         <activity
-            android:name=".WallPaperSettings"
+            android:name="com.pahanez.mywall.settings.WallPaperSettings"
             android:exported="true"
             android:label="@string/menu_settings"
             android:theme="@android:style/Theme.Light.WallpaperSettings" />

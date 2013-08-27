@@ -10,7 +10,10 @@
     
     <!--textsize  -->
     <dimen name="textview_text_size_value_width">40dp</dimen>
+    <dimen name="textview_text_title_size">18dp</dimen>
     <dimen name="textview_text_size">24dp</dimen>
     <dimen name="textview_margin_left">20dp</dimen>
     <!--/textview  -->
+    
+    <dimen name="checkbox_margin_left_right_title">5dp</dimen>
 </resources>

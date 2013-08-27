@@ -14,7 +14,7 @@ import java.util.List;
 public final class WPCPU {
 	// **********private interface***********//
 	private static WPCPU mInstance;
-	private List<ProcessItem> mProcessList;
+	private List<String> mProcessList;
 	// Overall statistics
 
 	// Process wise statistics
@@ -32,33 +32,24 @@ public final class WPCPU {
 	 * 
 	 * @return List of <WPProcessItems>.
 	 * */
-	public List<ProcessItem> getRawTopData() {
+	public List<String> getRawTopData() {
 		BufferedReader in = null;
-		mProcessList = new ArrayList<ProcessItem>();
+		mProcessList = new ArrayList<String>();
 		try {
-			Process process = null;
-			process = Runtime.getRuntime().exec("top -n 1 -d 1");
+			Process process = Runtime.getRuntime().exec("top -n 1 -d 1");
 
 			in = new BufferedReader(new InputStreamReader(process.getInputStream()),BUFFER_SIZE);
 
 			String line = "";
 			int i = 0;
 			while ((line = in.readLine()) != null) {
-				if(i > 6){/* // skip lines which we needn't
-				String[] tmpStr = line.split(" "); 
-					for(int ik = 0; ik < tmpStr.length; ik++)
-						if(tmpStr[ik].contains("%")){
-					ProcessItem item = new ProcessItem();
-					item.setFullData(line);
-					item.setProcessPID(line.substring(0, 5).trim());
-					item.setProcessCPUusage(tmpStr[ik]);
-					item.setProcessName(tmpStr[tmpStr.length - 1]);
-					mProcessList.add(item);
-						}
-				*/ // GC reduce
-					ProcessItem item = new ProcessItem();
-					item.setFullData(line);
-					mProcessList.add(item);
+				if(i > 6){
+					String [] tmp = line.trim().split(" ");
+					String goal = null;
+					for(String s:tmp){
+						if(s.contains("%"))	goal = s;
+					}
+					mProcessList.add("[ " + tmp[0] + " | " + goal + " | " + tmp[tmp.length-1] + " ]");
 				}
 				i++;
 			}
@@ -75,5 +66,5 @@ public final class WPCPU {
 		}
 		return mProcessList;
 	}
-
+	
 }

@@ -1,6 +1,6 @@
 package com.pahanez.mywall.cpu;
 
-public class ProcessItem {
+public class ProcessItem { //на удаление
 	private String 	processPID;
 	private String 	processName;
 	private String	processCPUusage;
