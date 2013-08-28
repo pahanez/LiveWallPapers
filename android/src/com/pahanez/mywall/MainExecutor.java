@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainExecutor {
+    private ExecutorService mParserExecutor = Executors.newSingleThreadExecutor();
     private ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
     private volatile boolean mIsVisible = true;
     private List<Runnable> cache = new CopyOnWriteArrayList<Runnable>();
@@ -22,9 +23,10 @@ public class MainExecutor {
 
     public <T> void executeWhileVisible (Task<T> task, CallBack<T> callBack) { 
     	RunnableDecorator<T> runnable = new RunnableDecorator<T>(task, callBack);
-    	if(mIsVisible)	mExecutorService.execute(runnable);
+    	if(mIsVisible)	mParserExecutor.execute(runnable);
     	else cache.add(runnable);
-    }
+    } 
+    
     public <T> void execute (Task<T> task, CallBack<T> callBack) { 
     	RunnableDecorator<T> runnable = new RunnableDecorator<T>(task, callBack);
     	mExecutorService.execute(runnable);
