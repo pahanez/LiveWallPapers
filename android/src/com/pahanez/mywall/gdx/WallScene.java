@@ -29,7 +29,6 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 
 	private Stage mStage;
 	public final static int DEFAULT_FRAME_INTERVAL = 60;
-	public static boolean sIsVisible = false; 
 	private CustomFont mCustomFont ;
 	private SettingsHolder mSettingsHolder ;
 	private Random mRandom = new Random();
@@ -49,7 +48,7 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 	public void render() {
 
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
+		
 		int deltaTime = (int) (Gdx.graphics.getDeltaTime() * 1000);
 		if (deltaTime > DEFAULT_FRAME_INTERVAL)
 			deltaTime = DEFAULT_FRAME_INTERVAL;
@@ -61,12 +60,9 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 
 			}
 		} 
-		mSpriteBatch.begin();
-		mShaderProgram.setUniformf("time", walk -= 0.002);
-		if (walk <= -300)
-			walk = 0;
-		mSpriteBatch.draw(mTexture, 0, 0, mWidth, mHeight);
-		mSpriteBatch.end();
+		if(SettingsHolder.mIsAnimatedBackground) renderAnimatedBackground();
+		else renderSimpleBackGround();
+			
 		
 		mStage.act(); 
 		mStage.draw();
@@ -149,8 +145,6 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 		if (SettingsHolder.isRandomTextColor)
 			actor.setColor(mRandom.nextFloat(), mRandom.nextFloat(), mRandom.nextFloat(), 1.0F);
 		else {
-//			Color c = new Color(/*mSettings.getCustomTextColor()*/);
-//			actor.setColor(c.g, c.b, c.a, c.r);
 			actor.setColor(SettingsHolder.mCustomTextColor);
 		}
 		actor.setX(mRandom.nextInt(mWidth));
@@ -178,13 +172,11 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 	@Override
 	public void pause() {
 		Gdx.app.log(TAG, "pause");
-		sIsVisible = false;
 	}
 
 	@Override
 	public void resume() {
 		Gdx.app.log(TAG, "resume");
-		sIsVisible = true;
 	}
 
 	@Override
@@ -193,4 +185,18 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 		Settings.getInstance().dispose();
 		
 	}
+	
+	private void renderAnimatedBackground(){
+		mSpriteBatch.begin();
+		mShaderProgram.setUniformf("time", walk -= 0.002);
+		if (walk <= -300)
+			walk = 0;
+		mSpriteBatch.draw(mTexture, 0, 0, mWidth, mHeight);
+		mSpriteBatch.end();
+	}
+	
+	private void renderSimpleBackGround(){
+		Gdx.gl.glClearColor(SettingsHolder.mCustomBackgroundColor.r, SettingsHolder.mCustomBackgroundColor.g, SettingsHolder.mCustomBackgroundColor.b, 1.0F);
+	}
+	
 }

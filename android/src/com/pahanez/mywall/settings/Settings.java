@@ -18,7 +18,7 @@ public class Settings {
 	private SharedPreferences mSharedPrefs;
 	private static final String SHARED_PREFS_FILENAME = "time_wall_prefs";
 	private static final String RANDOM_COLOR_KEY = "random_color";
-	private static final String RANDOM_TEXTSIZE = "random_textsize";
+	private static final String ANIMATION_BACKGROUND_ENABLED = "animated_background";
 	private static final String MIN_TEXTSIZE_KEY = "min_textsize";
 	private static final String MAX_TEXTSIZE_KEY = "max_textsize";
 	private static final String FRAME_RATE_VALUE = "frame_rate";
@@ -95,20 +95,22 @@ public class Settings {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(CUSTOM_COLOR_BACKGROUND_VALUE, value);
 		editor.commit();
+		mOnSettingsChangedListener.onSettingsChanged();
 	}
 
 	public int getCustomBackgroundColor() {
 		return mSharedPrefs.getInt(CUSTOM_COLOR_BACKGROUND_VALUE, WConstants.DEFAULT_BACKGROUND_COLOR);
 	}
 
-	public boolean isRandomTextSize() {
-		return mSharedPrefs.getBoolean(RANDOM_TEXTSIZE, true);
+	public boolean isAnimatedBackground() {
+		return mSharedPrefs.getBoolean(ANIMATION_BACKGROUND_ENABLED, true);
 	}
 
-	public void setRandomTextSize(boolean value) {
+	public void setAnimatedBackground(boolean value) {
 		Editor editor = mSharedPrefs.edit();
-		editor.putBoolean(RANDOM_TEXTSIZE, value);
+		editor.putBoolean(ANIMATION_BACKGROUND_ENABLED, value);
 		editor.commit();
+		mOnSettingsChangedListener.onSettingsChanged();
 	}
 
 	public void setMinTextSize(int value) {

@@ -7,7 +7,7 @@
     <string name="random_text_color_tv">Random Text Color</string>
     <!-- TextSize -->
     <string name="text_settings">Text Settings</string>
-    <string name="random_textsize_tv">Random Text Size</string>
+    <string name="animated_background_tv">Animated Background</string>
     <string name="textsize_tv">Text Size</string>
     <string name="textsize_choose">Choose Text Size</string>
     <string name="background_color_picker_tv">Background Color</string>
@@ -20,9 +20,10 @@
     <string name="frame_rate_tv">Frame Rate</string>
     <string name="value_tv">Value</string>
     <!-- /FrameRate -->
-    <!-- Background color -->
+    <!-- Background -->
     <string name="choose_background_color_text">Choose background color</string>
-    <!-- /Background color -->
+    <string name="background_settings">Background Settings</string>
+    <!-- /Background -->
     <!-- Element Count -->
     <string name="element_count_tv">Elements per Frame</string>
     <!-- /Element Count -->

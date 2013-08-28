@@ -57,7 +57,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	private static final int TEXT_SIZE_DIALOG = 104;
 	private static final int FONTS_DIALOG = 105;
 	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mFrameRateTV, mElementCountTV, mDataTypeTV, mFontsTV;
-	private CheckBox mRandomColorCB, mRandomTextSizeCB;
+	private CheckBox mRandomColorCB, mAnimBackCB;
 	private ListView mListView;
 	private Settings mSettings;
 	// textsizesettings
@@ -95,19 +95,20 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		mRandomColorCB.setChecked(SettingsHolder.isRandomTextColor);
 		mRandomColorCB.setOnCheckedChangeListener(this);
 
-		mRandomTextSizeCB = (CheckBox) findViewById(R.id.random_textsize_checkbox);
-		mRandomTextSizeCB.setChecked(mSettings.isRandomTextSize());
-		mRandomTextSizeCB.setOnCheckedChangeListener(this);
+		mAnimBackCB = (CheckBox) findViewById(R.id.animated_background_checkbox);
+		mAnimBackCB.setChecked(SettingsHolder.mIsAnimatedBackground);
+		mAnimBackCB.setOnCheckedChangeListener(this);
 
 
 		mBackgroundColorPickerTV = (TextView) findViewById(R.id.background_color_picker_tv);
 		mBackgroundColorPickerTV.setOnClickListener(this);
+		mBackgroundColorPickerTV.setEnabled(!SettingsHolder.mIsAnimatedBackground);
 
-		mFrameRateTV = (TextView) findViewById(R.id.frame_rate_tv);
+		/*mFrameRateTV = (TextView) findViewById(R.id.frame_rate_tv);
 		mFrameRateTV.setOnClickListener(this);
 
 		mElementCountTV = (TextView) findViewById(R.id.element_count_tv);
-		mElementCountTV.setOnClickListener(this);
+		mElementCountTV.setOnClickListener(this);*/
 
 		mTextColorPickerTV = (TextView) findViewById(R.id.text_color_picker_tv);
 		mTextColorPickerTV.setOnClickListener(this);
@@ -154,8 +155,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSettings.setRandomTextColor(isChecked);
 			mTextColorPickerTV.setEnabled(!SettingsHolder.isRandomTextColor);
 			break;
-		case R.id.random_textsize_checkbox:
-			mSettings.setRandomTextSize(isChecked);
+		case R.id.animated_background_checkbox:
+			mSettings.setAnimatedBackground(isChecked);
+			mBackgroundColorPickerTV.setEnabled(!isChecked);
 			break;
 		default:
 			break;
@@ -165,9 +167,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.textsize_tv:
+		/*case R.id.textsize_tv:
 			showDialog(TEXTSIZE_DIALOG);
-			break;
+			break;*/
 		case R.id.text_size_tv:
 			showDialog(TEXT_SIZE_DIALOG);
 			break;
@@ -188,12 +190,12 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 			break;
 
-		case R.id.frame_rate_tv:
+		/*case R.id.frame_rate_tv:
 			showDialog(FRAMERATE_DIALOG);
 			break;
 		case R.id.element_count_tv:
 			showDialog(ELEMENT_COUNT);
-			break;
+			break;*/
 		case R.id.fonts_tv:
 			showDialog(FONTS_DIALOG);
 			break;
@@ -207,22 +209,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		switch (id) {
-		case TEXTSIZE_DIALOG:
-			WLog.i(TAG, "TEXTSIZE_DIALOG");
-			adb.setTitle(getString(R.string.textsize_tv));
-			View viewTextSize = (LinearLayout) getLayoutInflater().inflate(R.layout.settings_textsize, null);
-			adb.setView(viewTextSize);
-			mTextSettingsMinSeekBar = (SeekBar) viewTextSize.findViewById(R.id.textsize_min_settings_seekbar);
-			mTextSettingsMaxSeekBar = (SeekBar) viewTextSize.findViewById(R.id.textsize_max_settings_seekbar);
-			mTextSettingsMaxSeekBar.setMax(150);
-			mTextSettingsMinSeekBar.setMax(150);
-			mTextSettingsMaxSeekBar.setOnSeekBarChangeListener(this);
-			mTextSettingsMinSeekBar.setOnSeekBarChangeListener(this);
-			mTextValueMin = (TextView) viewTextSize.findViewById(R.id.min_val_tv);
-			mTextValueMax = (TextView) viewTextSize.findViewById(R.id.max_val_tv);
-			mTextSettingsMin = (TextView) viewTextSize.findViewById(R.id.min_size_textview);
-
-			return adb.create();
+		
 		case FRAMERATE_DIALOG:
 			WLog.i(TAG, "FRAMERATE_DIALOG");
 			adb.setTitle(getString(R.string.frame_rate_tv));
@@ -300,31 +287,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	protected void onPrepareDialog(int id, final Dialog dialog) {
 
 		switch (id) {
-		case TEXTSIZE_DIALOG:
-			dialog.setOnDismissListener(new OnDismissListener() {
-
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					mSettings.setMaxTextSize(mTextSettingsMaxSeekBar.getProgress());
-					mSettings.setMinTextSize(mTextSettingsMinSeekBar.getProgress());
-				}
-			});
-			if (mSettings.isRandomTextSize()) {
-				dialog.findViewById(R.id.min_val_layout).setVisibility(View.VISIBLE);
-
-				mTextSettingsMaxSeekBar.setProgress((int) mSettings.getMaxTextSize());
-				mTextSettingsMinSeekBar.setProgress((int) mSettings.getMinTextSize());
-				mTextValueMin.setText(String.valueOf((int) mSettings.getMinTextSize()));
-				mTextValueMax.setText(String.valueOf((int) mSettings.getMaxTextSize()));
-				mTextSettingsMin.setText(getString(R.string.textsize_min));
-			} else {
-				dialog.findViewById(R.id.min_val_layout).setVisibility(View.GONE);
-				mTextSettingsMin.setText(getString(R.string.textsize));
-				mTextSettingsMinSeekBar.setProgress((int) mSettings.getMinTextSize());
-				mTextValueMin.setText(String.valueOf((int) mSettings.getMinTextSize()));
-			}
-
-			break;
+		
 		case FRAMERATE_DIALOG:
 			mSeekBar.setTag(FRAMERATE_DIALOG);
 			mSeekBar.setProgress(mSettings.getFrameRate());
@@ -419,7 +382,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	public void onColorChanged(int id, int color) {
 		switch (id) {
 		case WConstants.BACKGROUNG_COLOR_DIALOG:
-			WLog.e(TAG,"f : " + Integer.toHexString(color));
 			mSettings.setCustomBackgroundColor(color);
 			break;
 		case WConstants.TEXT_COLOR_DIALOG:

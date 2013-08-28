@@ -1,6 +1,7 @@
 package com.pahanez.mywall.settings;
 
 import com.badlogic.gdx.graphics.Color;
+import com.pahanez.mywall.utils.WLog;
 
 import android.graphics.Typeface;
 
@@ -10,6 +11,8 @@ public class SettingsHolder implements OnSettingsChangedListener{
 	public static Typeface [] fonts = null;
 	public static boolean isRandomTextColor = false;
 	public static Color mCustomTextColor;
+	public static Color mCustomBackgroundColor;
+	public static boolean mIsAnimatedBackground;
 	
 	public SettingsHolder() {
 		onSettingsChanged();
@@ -19,9 +22,11 @@ public class SettingsHolder implements OnSettingsChangedListener{
 	@Override
 	public void onSettingsChanged() {
 		isRandomTextColor = mSettings.isRandomTextColor();
-		
-		Color c = new Color(mSettings.getCustomTextColor());
-		mCustomTextColor = new Color(c.g, c.b, c.a, c.r);
+		mIsAnimatedBackground = mSettings.isAnimatedBackground();
+		Color textColor = new Color(mSettings.getCustomTextColor());
+		mCustomTextColor = new Color(textColor.g, textColor.b, textColor.a, textColor.r);
+		Color backgroundColor = new Color(mSettings.getCustomBackgroundColor());
+		mCustomBackgroundColor = new Color(backgroundColor.g, backgroundColor.b, backgroundColor.a, backgroundColor.r);
 		
 	}
 	
