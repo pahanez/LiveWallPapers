@@ -24,8 +24,9 @@
     <string name="choose_background_color_text">Choose background color</string>
     <string name="background_settings">Background Settings</string>
     <!-- /Background -->
+     <string name="main_settings">Main Settings</string>
     <!-- Element Count -->
-    <string name="element_count_tv">Elements per Frame</string>
+    <string name="element_count_tv">Items per Frame</string>
     <!-- /Element Count -->
     <!-- Data Type -->
     <string name="data_type_name">Choose Data Type</string>

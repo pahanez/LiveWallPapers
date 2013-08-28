@@ -6,43 +6,40 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-         <TextView
-                style="@style/title_devider"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_settings"
-                 />
-            <TextView
-                android:id="@+id/text_size_tv"
-                style="@style/clickable_textview_settings"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/settings_main_item_height"
-                android:text="@string/textsize" />
 
-            <ImageView
-                style="@style/devider"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/devider_height" />
-            
-            <TextView
-                android:id="@+id/fonts_tv"
-                style="@style/clickable_textview_settings"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/settings_main_item_height"
-                android:text="@string/fonts_menu" />
-            
-             <ImageView
+        <TextView
+            style="@style/title_devider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_settings" />
+
+        <TextView
+            android:id="@+id/text_size_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/textsize" />
+
+        <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/devider_height" />
-             
-             
-         
+
+        <TextView
+            android:id="@+id/fonts_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/fonts_menu" />
+
+        <ImageView
+            style="@style/devider"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/devider_height" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="@dimen/settings_main_item_height" >
-
 
             <TextView
                 android:id="@+id/random_color_textview"
@@ -67,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent" />
         </RelativeLayout>
-        
+
         <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
@@ -79,13 +76,12 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/settings_main_item_height"
             android:text="@string/text_color_picker_tv" />
-        
-            <TextView 
-                style="@style/title_devider"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/background_settings"
-                 />
+
+        <TextView
+            style="@style/title_devider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/background_settings" />
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -96,9 +92,9 @@
                 style="@style/textview_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:singleLine="true"
-                android:ellipsize="marquee"
                 android:layout_toLeftOf="@+id/animated_background_vertical_devider"
+                android:ellipsize="marquee"
+                android:singleLine="true"
                 android:text="@string/animated_background_tv" />
 
             <ImageView
@@ -116,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent" />
         </RelativeLayout>
-        
+
         <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
@@ -130,9 +126,20 @@
             android:text="@string/background_color_picker_tv" />
         
         
+        <TextView
+            style="@style/title_devider"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_settings" />
 
-
-        <!-- <ImageView
+         <TextView
+            android:id="@+id/elements_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/element_count_tv" />
+        <!--
+        <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/devider_height" />
@@ -165,11 +172,11 @@
             android:layout_height="@dimen/devider_height" />
 
         <TextView
-            android:id="@+id/frame_rate_tv"
+            android:id="@+id/elements_tv"
             style="@style/clickable_textview_settings"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/settings_main_item_height"
-            android:text="@string/frame_rate_tv" />
+            android:text="@string/elements_tv" />
 
         <ImageView
             style="@style/devider"
@@ -186,7 +193,8 @@
         <ImageView
             style="@style/devider"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/devider_height" /> -->
+            android:layout_height="@dimen/devider_height" />
+        -->
     </LinearLayout>
 
 </ScrollView>

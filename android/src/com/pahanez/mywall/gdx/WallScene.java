@@ -20,10 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.pahanez.mywall.cpu.TopParser;
 import com.pahanez.mywall.font.CustomFont;
+import com.pahanez.mywall.settings.OnSettingsChangedListener;
 import com.pahanez.mywall.settings.Settings;
 import com.pahanez.mywall.settings.SettingsHolder;
+import com.pahanez.mywall.utils.WLog;
 
-public class WallScene implements ApplicationListener, AndroidWallpaperListener {
+public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener {
 
 	private static final String TAG = WallPaper.class.getSimpleName();
 
@@ -115,13 +117,11 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 		mSettingsHolder = new SettingsHolder();
 
 		mStage = new Stage(mWidth, mHeight, true);
-
+		
+		Settings.getInstance().registerOnSettingsChangedListener(this);
+		
 		initActorList();
-		for (Actor actor : mActors) {
-			updateActorState(mActors.indexOf(actor));
-			mStage.addActor(actor);
-		}
-
+		
 		ShaderProgram.pedantic = false;
 		mShaderProgram = new ShaderProgram(VERT, FRAG);
 		if (mShaderProgram.isCompiled() == false) {
@@ -135,29 +135,47 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 	}
 
 	private void initActorList() {
-		for (int i = 0; i < 20; i++) {
+		if(!mActors.isEmpty()) {
+			for(Actor actor:mActors){
+				actor.clear();
+				mStage.clear();
+				actor = null;
+				
+			}
+			mActors.clear();
+			
+		}
+		
+		for (int i = 0; i < SettingsHolder.mElementsCount; i++) {
 			mActors.add(new CustomActor());
+		}
+		
+		for (Actor actor : mActors) {
+			updateActorState(mActors.indexOf(actor));
+			mStage.addActor(actor);
 		}
 	}
 
 	private void updateActorState(final int position) {
-		final CustomActor actor = mActors.get(position);
-		if (SettingsHolder.isRandomTextColor)
-			actor.setColor(mRandom.nextFloat(), mRandom.nextFloat(), mRandom.nextFloat(), 1.0F);
-		else {
-			actor.setColor(SettingsHolder.mCustomTextColor);
-		}
-		actor.setX(mRandom.nextInt(mWidth));
-		actor.setY(mRandom.nextInt(mHeight));
-		actor.increment();
-		actor.setValue(mTopParser.getRandomTopElement());
-		actor.addAction(sequence(CustomActions.getRandomAction(), run(new Runnable() {
-
-			@Override
-			public void run() {
-				updateActorState(position);
+		if (position < SettingsHolder.mElementsCount) {
+			final CustomActor actor = mActors.get(position);
+			if (SettingsHolder.isRandomTextColor)
+				actor.setColor(mRandom.nextFloat(), mRandom.nextFloat(), mRandom.nextFloat(), 1.0F);
+			else {
+				actor.setColor(SettingsHolder.mCustomTextColor);
 			}
-		})));
+			actor.setX(mRandom.nextInt(mWidth));
+			actor.setY(mRandom.nextInt(mHeight));
+			actor.increment();
+			actor.setValue(mTopParser.getRandomTopElement());
+			actor.addAction(sequence(CustomActions.getRandomAction(), run(new Runnable() {
+
+				@Override
+				public void run() {
+					updateActorState(position);
+				}
+			})));
+		}
 	}
 
 	@Override
@@ -197,6 +215,11 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener 
 	
 	private void renderSimpleBackGround(){
 		Gdx.gl.glClearColor(SettingsHolder.mCustomBackgroundColor.r, SettingsHolder.mCustomBackgroundColor.g, SettingsHolder.mCustomBackgroundColor.b, 1.0F);
+	}
+
+	@Override
+	public void onSettingsChanged() {
+		initActorList();
 	}
 	
 }

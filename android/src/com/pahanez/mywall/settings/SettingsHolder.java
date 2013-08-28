@@ -13,6 +13,7 @@ public class SettingsHolder implements OnSettingsChangedListener{
 	public static Color mCustomTextColor;
 	public static Color mCustomBackgroundColor;
 	public static boolean mIsAnimatedBackground;
+	public static int mElementsCount;
 	
 	public SettingsHolder() {
 		onSettingsChanged();
@@ -27,6 +28,7 @@ public class SettingsHolder implements OnSettingsChangedListener{
 		mCustomTextColor = new Color(textColor.g, textColor.b, textColor.a, textColor.r);
 		Color backgroundColor = new Color(mSettings.getCustomBackgroundColor());
 		mCustomBackgroundColor = new Color(backgroundColor.g, backgroundColor.b, backgroundColor.a, backgroundColor.r);
+		mElementsCount = mSettings.getElementsCount();
 		
 	}
 	

@@ -104,9 +104,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		mBackgroundColorPickerTV.setOnClickListener(this);
 		mBackgroundColorPickerTV.setEnabled(!SettingsHolder.mIsAnimatedBackground);
 
-		/*mFrameRateTV = (TextView) findViewById(R.id.frame_rate_tv);
+		mFrameRateTV = (TextView) findViewById(R.id.elements_tv);
 		mFrameRateTV.setOnClickListener(this);
-
+/*
 		mElementCountTV = (TextView) findViewById(R.id.element_count_tv);
 		mElementCountTV.setOnClickListener(this);*/
 
@@ -190,9 +190,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 			break;
 
-		/*case R.id.frame_rate_tv:
-			showDialog(FRAMERATE_DIALOG);
+		case R.id.elements_tv:
+			showDialog(ELEMENT_COUNT);
 			break;
+			/*
 		case R.id.element_count_tv:
 			showDialog(ELEMENT_COUNT);
 			break;*/
@@ -295,8 +296,8 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			break;
 		case ELEMENT_COUNT:
 			mSeekBar.setTag(ELEMENT_COUNT);
-			mSeekBar.setProgress(mSettings.getElementsPerFrame());
-			mSeekValue.setText(String.valueOf(mSettings.getElementsPerFrame()));
+			mSeekBar.setProgress(mSettings.getElementsCount());
+			mSeekValue.setText(String.valueOf(mSettings.getElementsCount()));
 			break;
 		case TEXT_SIZE_DIALOG:
 			mListView.setItemChecked(mSettings.getFontSize(), true);
@@ -372,7 +373,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			if (seekBar.getTag().equals(FRAMERATE_DIALOG)) {
 				mSettings.setFrameRate(seekBar.getProgress());
 			} else if (seekBar.getTag().equals(ELEMENT_COUNT)) {
-				mSettings.setElementsPerFrame(seekBar.getProgress());
+				mSettings.setElementsCount(seekBar.getProgress());
 			}
 		}
 

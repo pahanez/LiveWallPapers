@@ -1,5 +1,7 @@
 package com.pahanez.mywall.settings;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -9,7 +11,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.pahanez.mywall.WConstants;
 import com.pahanez.mywall.WallApplication;
 import com.pahanez.mywall.font.OnFontChangedListener;
-import com.pahanez.mywall.utils.WLog;
 
 public class Settings {
 	private static final String TAG = Settings.class.getSimpleName();
@@ -38,7 +39,7 @@ public class Settings {
 
 	
 	private OnFontChangedListener mOnFontChangedListener;
-	private OnSettingsChangedListener mOnSettingsChangedListener;
+	private ArrayList<OnSettingsChangedListener> mSettingsChangedListeners = new ArrayList<OnSettingsChangedListener>();
 	private Settings() {
 		mSharedPrefs = WallApplication.getContext().getSharedPreferences(SHARED_PREFS_FILENAME, Context.MODE_PRIVATE);
 	}
@@ -48,11 +49,20 @@ public class Settings {
 	}
 	
 	public void registerOnSettingsChangedListener(OnSettingsChangedListener mOnSettingsChangedListener){
-		this.mOnSettingsChangedListener = mOnSettingsChangedListener;
+		synchronized (mSettingsChangedListeners) {
+			mSettingsChangedListeners.add(mOnSettingsChangedListener);
+		}
+	}
+	
+	public void notifyOnSettingsChangedListeners(){
+		synchronized (mSettingsChangedListeners) {
+			for(OnSettingsChangedListener listener:mSettingsChangedListeners) listener.onSettingsChanged();
+		}
 	}
 	
 	private void removeOnSettingsChangedListener(){
-		mOnSettingsChangedListener = null;
+		mSettingsChangedListeners.clear();
+		mSettingsChangedListeners = null;
 	}
 	
 	public void registerOnFontChangedListener(OnFontChangedListener mOnFontChangedListener){
@@ -77,14 +87,14 @@ public class Settings {
 		Editor editor = mSharedPrefs.edit();
 		editor.putBoolean(RANDOM_COLOR_KEY, value);
 		editor.commit();
-		mOnSettingsChangedListener.onSettingsChanged();
+		notifyOnSettingsChangedListeners();
 	}
 
 	public void setCustomTextColor(int value) {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(CUSTOM_COLOR_TEXT_VALUE, value);
 		editor.commit();
-		mOnSettingsChangedListener.onSettingsChanged();
+		notifyOnSettingsChangedListeners();
 	}
 
 	public int getCustomTextColor() {
@@ -95,7 +105,7 @@ public class Settings {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(CUSTOM_COLOR_BACKGROUND_VALUE, value);
 		editor.commit();
-		mOnSettingsChangedListener.onSettingsChanged();
+		notifyOnSettingsChangedListeners();
 	}
 
 	public int getCustomBackgroundColor() {
@@ -110,7 +120,7 @@ public class Settings {
 		Editor editor = mSharedPrefs.edit();
 		editor.putBoolean(ANIMATION_BACKGROUND_ENABLED, value);
 		editor.commit();
-		mOnSettingsChangedListener.onSettingsChanged();
+		notifyOnSettingsChangedListeners();
 	}
 
 	public void setMinTextSize(int value) {
@@ -145,13 +155,14 @@ public class Settings {
 		return mSharedPrefs.getInt(FRAME_RATE_VALUE, DEFAULT_FRAME_RATE_VALUE);
 	}
 
-	public void setElementsPerFrame(int value) {
+	public void setElementsCount(int value) {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(ELEMENTS_PER_FRAME_VALUE, value);
 		editor.commit();
+		notifyOnSettingsChangedListeners();
 	}
 
-	public int getElementsPerFrame() {
+	public int getElementsCount() {
 		if (mSharedPrefs.getInt(ELEMENTS_PER_FRAME_VALUE, DEFAULT_ELEMENTS_PER_FRAME_VALUE) == 0)
 			return 1;
 		return mSharedPrefs.getInt(ELEMENTS_PER_FRAME_VALUE, DEFAULT_ELEMENTS_PER_FRAME_VALUE);
