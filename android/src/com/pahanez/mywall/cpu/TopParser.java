@@ -38,8 +38,10 @@ public class TopParser {
 				Process p = Runtime.getRuntime().exec(command);
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String str;
+				int i = 0;
 				while ((str = br.readLine()) != null) {
-
+					if(i++<=5)	continue;
+					
 					String[] tmp = str.trim().split(" ");
 					String goal = null;
 					for (String s : tmp) {
@@ -49,7 +51,6 @@ public class TopParser {
 					if (!str.trim().isEmpty())
 						process.add("[ " + tmp[0] + " | " + goal + " | " + tmp[tmp.length - 1] + " ]");
 				}
-				WLog.e("" + process.size() + " , " + command);
 				return process;
 			} catch (IOException e) {
 				e.printStackTrace();
