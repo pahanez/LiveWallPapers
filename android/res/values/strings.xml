@@ -26,8 +26,9 @@
     <!-- /Background -->
      <string name="main_settings">Main Settings</string>
     <!-- Element Count -->
-    <string name="element_count_tv">Items per Frame</string>
+    <string name="element_count_tv">Lines on Screen</string>
     <!-- /Element Count -->
+    <string name="proces_count_tv">Process Quantity</string>
     <!-- Data Type -->
     <string name="data_type_name">Choose Data Type</string>
     <string name="cpu_loading">Loading…</string>
@@ -37,7 +38,7 @@
         <item>CPU</item>
         <item>Time</item>
         <item>Custom file</item>
-    </string-array>
+    </string-array> 
     <!-- /Data Type -->
 
 

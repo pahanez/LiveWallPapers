@@ -18,7 +18,7 @@ public interface WConstants {
 	final String FONTS_FOLDER = "fonts/";
 	final String [] FONT_FILES = {"spectrumsmudged.ttf","merchant.ttf","codeman.ttf","5X5basic.ttf","advocut.ttf","arcade.ttf","xspace.ttf"};
 	
-	final int MAX_FRAMERATE 			= 30;
+	final int MAX_PROCESS 			= 100;
 	final int MAX_ELEMENTS_PER_FRAME 	= 50;
 	
 	final int CPU_TYPE  = 0;

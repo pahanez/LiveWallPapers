@@ -22,7 +22,7 @@ public class Settings {
 	private static final String ANIMATION_BACKGROUND_ENABLED = "animated_background";
 	private static final String MIN_TEXTSIZE_KEY = "min_textsize";
 	private static final String MAX_TEXTSIZE_KEY = "max_textsize";
-	private static final String FRAME_RATE_VALUE = "frame_rate";
+	private static final String PROCESS_QTY_VALUE = "process_qty";
 	private static final String ELEMENTS_PER_FRAME_VALUE = "elements_per_frame";
 	private static final String CUSTOM_COLOR_TEXT_VALUE = "text_color_value";
 	private static final String CUSTOM_COLOR_BACKGROUND_VALUE = "background_color_value";
@@ -34,7 +34,7 @@ public class Settings {
 	private static final int DEFAULT_FONT_VALUE = 1;
 	private static final int DEFAULT_DATA_TYPE_VALUE = 1;
 	private static final int DEFAULT_TEXTSIZE_VALUE = 20;
-	private static final int DEFAULT_FRAME_RATE_VALUE = 30;
+	private static final int DEFAULT_PROCESS_QTY_VALUE = 30;
 	private static final int DEFAULT_ELEMENTS_PER_FRAME_VALUE = 2;
 
 	
@@ -143,16 +143,17 @@ public class Settings {
 		return mSharedPrefs.getInt(MAX_TEXTSIZE_KEY, DEFAULT_TEXTSIZE_VALUE);
 	}
 
-	public void setFrameRate(int value) {
+	public void setProcessQty(int value) {
 		Editor editor = mSharedPrefs.edit();
-		editor.putInt(FRAME_RATE_VALUE, value);
-		editor.commit();
+		editor.putInt(PROCESS_QTY_VALUE, value);
+		editor.commit();  
+		notifyOnSettingsChangedListeners();
 	}
 
-	public int getFrameRate() {
-		if (mSharedPrefs.getInt(FRAME_RATE_VALUE, DEFAULT_FRAME_RATE_VALUE) == 0)
+	public int getProcessQty	() {
+		if (mSharedPrefs.getInt(PROCESS_QTY_VALUE, DEFAULT_PROCESS_QTY_VALUE) == 0)
 			return 1;
-		return mSharedPrefs.getInt(FRAME_RATE_VALUE, DEFAULT_FRAME_RATE_VALUE);
+		return mSharedPrefs.getInt(PROCESS_QTY_VALUE, DEFAULT_PROCESS_QTY_VALUE);
 	}
 
 	public void setElementsCount(int value) {

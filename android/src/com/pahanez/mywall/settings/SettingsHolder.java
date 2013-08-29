@@ -14,6 +14,7 @@ public class SettingsHolder implements OnSettingsChangedListener{
 	public static Color mCustomBackgroundColor;
 	public static boolean mIsAnimatedBackground;
 	public static int mElementsCount;
+	public static int mProcessCount;
 	
 	public SettingsHolder() {
 		onSettingsChanged();
@@ -29,6 +30,7 @@ public class SettingsHolder implements OnSettingsChangedListener{
 		Color backgroundColor = new Color(mSettings.getCustomBackgroundColor());
 		mCustomBackgroundColor = new Color(backgroundColor.g, backgroundColor.b, backgroundColor.a, backgroundColor.r);
 		mElementsCount = mSettings.getElementsCount();
+		mProcessCount = mSettings.getProcessQty();
 		
 	}
 	

@@ -14,10 +14,11 @@ import com.pahanez.mywall.MainExecutor.CallBack;
 import com.pahanez.mywall.MainExecutor.Task;
 import com.pahanez.mywall.R;
 import com.pahanez.mywall.WallApplication;
+import com.pahanez.mywall.settings.SettingsHolder;
 import com.pahanez.mywall.utils.WLog;
 
 public class TopParser {
-	private static final String TOP = "top -n 1 -m 100";
+	private static final String TOP = "top -n 1 -m ";
 	private static final int DELAY = 2;
 	private List<String> mData = new CopyOnWriteArrayList<String>();
 	private Random mRandom = new Random();
@@ -33,7 +34,8 @@ public class TopParser {
 		public ArrayList<String> fullfill() {
 			try {
 				ArrayList<String> process = new ArrayList<String>();
-				Process p = Runtime.getRuntime().exec(TOP);
+				String command = TOP + SettingsHolder.mProcessCount;
+				Process p = Runtime.getRuntime().exec(command);
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String str;
 				while ((str = br.readLine()) != null) {
@@ -42,11 +44,12 @@ public class TopParser {
 					String goal = null;
 					for (String s : tmp) {
 						if (s.contains("%"))
-							goal = s;
+							goal = s; 
 					}
 					if (!str.trim().isEmpty())
 						process.add("[ " + tmp[0] + " | " + goal + " | " + tmp[tmp.length - 1] + " ]");
 				}
+				WLog.e("" + process.size() + " , " + command);
 				return process;
 			} catch (IOException e) {
 				e.printStackTrace();

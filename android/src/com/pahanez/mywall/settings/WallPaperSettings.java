@@ -51,12 +51,12 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 	private static final String TAG = WallPaperSettings.class.getSimpleName();
 	private static final int DATA_TYPE_REQUEST_CODE = 107;
-	private static final int TEXTSIZE_DIALOG = 101;
+	private static final int PROCESS_DIALOG = 101;
 	private static final int FRAMERATE_DIALOG = 102;
 	private static final int ELEMENT_COUNT = 103;
 	private static final int TEXT_SIZE_DIALOG = 104;
 	private static final int FONTS_DIALOG = 105;
-	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mFrameRateTV, mElementCountTV, mDataTypeTV, mFontsTV;
+	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mLinesOnScreen,mProcessQty, mElementCountTV, mDataTypeTV, mFontsTV;
 	private CheckBox mRandomColorCB, mAnimBackCB;
 	private ListView mListView;
 	private Settings mSettings;
@@ -104,8 +104,11 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		mBackgroundColorPickerTV.setOnClickListener(this);
 		mBackgroundColorPickerTV.setEnabled(!SettingsHolder.mIsAnimatedBackground);
 
-		mFrameRateTV = (TextView) findViewById(R.id.elements_tv);
-		mFrameRateTV.setOnClickListener(this);
+		mLinesOnScreen = (TextView) findViewById(R.id.elements_tv);
+		mLinesOnScreen.setOnClickListener(this);
+		
+		mProcessQty = (TextView) findViewById(R.id.process_tv);
+		mProcessQty.setOnClickListener(this);
 /*
 		mElementCountTV = (TextView) findViewById(R.id.element_count_tv);
 		mElementCountTV.setOnClickListener(this);*/
@@ -193,10 +196,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		case R.id.elements_tv:
 			showDialog(ELEMENT_COUNT);
 			break;
-			/*
-		case R.id.element_count_tv:
-			showDialog(ELEMENT_COUNT);
-			break;*/
+			
+		case R.id.process_tv:
+			showDialog(PROCESS_DIALOG);
+			break;
 		case R.id.fonts_tv:
 			showDialog(FONTS_DIALOG);
 			break;
@@ -211,16 +214,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		switch (id) {
 		
-		case FRAMERATE_DIALOG:
-			WLog.i(TAG, "FRAMERATE_DIALOG");
-			adb.setTitle(getString(R.string.frame_rate_tv));
-			View viewFrameRate = (LinearLayout) getLayoutInflater().inflate(R.layout.settings_single_seekbar, null);
-			adb.setView(viewFrameRate);
-			mSeekBar = (SeekBar) viewFrameRate.findViewById(R.id.my_seekbar);
-			mSeekBar.setMax(WConstants.MAX_FRAMERATE);
-			mSeekBar.setOnSeekBarChangeListener(this);
-			mSeekValue = (TextView) viewFrameRate.findViewById(R.id.val_seek_tv);
-			return adb.create();
 		case ELEMENT_COUNT:
 			WLog.i(TAG, "ELEMENT_COUNT");
 			adb.setTitle(getString(R.string.element_count_tv));
@@ -230,6 +223,16 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSeekBar.setMax(WConstants.MAX_ELEMENTS_PER_FRAME);
 			mSeekBar.setOnSeekBarChangeListener(this);
 			mSeekValue = (TextView) viewElementCount.findViewById(R.id.val_seek_tv);
+			return adb.create();
+		case PROCESS_DIALOG:
+			WLog.i(TAG, "PROCESS_DIALOG");
+			adb.setTitle(getString(R.string.proces_count_tv));
+			View viewProcessQty = (LinearLayout) getLayoutInflater().inflate(R.layout.settings_single_seekbar, null);
+			adb.setView(viewProcessQty);
+			mSeekBar = (SeekBar) viewProcessQty.findViewById(R.id.my_seekbar);
+			mSeekBar.setMax(WConstants.MAX_PROCESS);
+			mSeekBar.setOnSeekBarChangeListener(this);
+			mSeekValue = (TextView) viewProcessQty.findViewById(R.id.val_seek_tv);
 			return adb.create();
 		case TEXT_SIZE_DIALOG:
 			WLog.i(TAG, "TEXT_SIZE_DIALOG");
@@ -289,10 +292,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 		switch (id) {
 		
-		case FRAMERATE_DIALOG:
-			mSeekBar.setTag(FRAMERATE_DIALOG);
-			mSeekBar.setProgress(mSettings.getFrameRate());
-			mSeekValue.setText(String.valueOf(mSettings.getFrameRate()));
+		case PROCESS_DIALOG:
+			mSeekBar.setTag(PROCESS_DIALOG);
+			mSeekBar.setProgress(mSettings.getProcessQty());
+			mSeekValue.setText(String.valueOf(mSettings.getProcessQty())); 
 			break;
 		case ELEMENT_COUNT:
 			mSeekBar.setTag(ELEMENT_COUNT);
@@ -370,8 +373,8 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
 		if (seekBar.getTag() != null) {
-			if (seekBar.getTag().equals(FRAMERATE_DIALOG)) {
-				mSettings.setFrameRate(seekBar.getProgress());
+			if (seekBar.getTag().equals(PROCESS_DIALOG)) {
+				mSettings.setProcessQty(seekBar.getProgress());
 			} else if (seekBar.getTag().equals(ELEMENT_COUNT)) {
 				mSettings.setElementsCount(seekBar.getProgress());
 			}

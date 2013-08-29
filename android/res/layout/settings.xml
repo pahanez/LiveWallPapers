@@ -138,6 +138,18 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/settings_main_item_height"
             android:text="@string/element_count_tv" />
+         
+         <ImageView
+            style="@style/devider"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/devider_height" />
+         
+         <TextView
+            android:id="@+id/process_tv"
+            style="@style/clickable_textview_settings"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/settings_main_item_height"
+            android:text="@string/proces_count_tv" />
         <!--
         <ImageView
             style="@style/devider"

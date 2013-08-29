@@ -16,7 +16,7 @@ gen/
 # Local configuration file (sdk path, etc)
 local.properties
 
-#eclipse
+#*eclipse
 *.pydevproject
 .project
 .metadata
