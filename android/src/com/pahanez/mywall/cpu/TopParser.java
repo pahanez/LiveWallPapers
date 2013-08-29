@@ -15,7 +15,6 @@ import com.pahanez.mywall.MainExecutor.Task;
 import com.pahanez.mywall.R;
 import com.pahanez.mywall.WallApplication;
 import com.pahanez.mywall.settings.SettingsHolder;
-import com.pahanez.mywall.utils.WLog;
 
 public class TopParser {
 	private static final String TOP = "top -n 1 -m ";

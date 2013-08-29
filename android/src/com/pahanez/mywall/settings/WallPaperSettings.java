@@ -323,7 +323,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					mSettings.setFont(position);
-					dialog.cancel();
+					dialog.cancel(); 
 				}
 			});
 

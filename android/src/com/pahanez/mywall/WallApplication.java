@@ -2,7 +2,6 @@ package com.pahanez.mywall;
 
 import android.app.Application;
 import android.content.Context;
-import android.graphics.Typeface;
 
 public class WallApplication extends Application{
 	

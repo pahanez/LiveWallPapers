@@ -34,7 +34,7 @@ public class Settings {
 	private static final int DEFAULT_FONT_VALUE = 1;
 	private static final int DEFAULT_DATA_TYPE_VALUE = 1;
 	private static final int DEFAULT_TEXTSIZE_VALUE = 20;
-	private static final int DEFAULT_PROCESS_QTY_VALUE = 30;
+	private static final int DEFAULT_PROCESS_QTY_VALUE = 10;
 	private static final int DEFAULT_ELEMENTS_PER_FRAME_VALUE = 2;
 
 	
