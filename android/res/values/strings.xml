@@ -13,7 +13,7 @@
     <string name="background_color_picker_tv">Background Color</string>
     <string name="text_color_picker_tv">Text Color</string>
     <string name="textsize">Text size</string>
-    <string name="textsize_min">MIN</string>
+    <string name="generating_font">Generating Font</string>
     <string name="textsize_max">MAX</string>
     <!-- /TextSize -->
     <!-- FrameRate -->

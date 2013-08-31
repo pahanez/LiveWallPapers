@@ -1,18 +1,11 @@
 package com.pahanez.mywall.settings;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,18 +24,11 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.ipaulpro.afilechooser.utils.FileUtils;
 import com.pahanez.mywall.MainExecutor;
+import com.pahanez.mywall.MainExecutor.CallBack;
 import com.pahanez.mywall.MainExecutor.Task;
 import com.pahanez.mywall.R;
 import com.pahanez.mywall.WConstants;
-import com.pahanez.mywall.WallController;
-import com.pahanez.mywall.MainExecutor.CallBack;
-import com.pahanez.mywall.R.array;
-import com.pahanez.mywall.R.dimen;
-import com.pahanez.mywall.R.id;
-import com.pahanez.mywall.R.layout;
-import com.pahanez.mywall.R.string;
 import com.pahanez.mywall.utils.ColorPickerDialog;
 import com.pahanez.mywall.utils.ColorPickerDialog.OnColorChangedListener;
 import com.pahanez.mywall.utils.Util;
@@ -51,19 +37,17 @@ import com.pahanez.mywall.utils.WLog;
 public class WallPaperSettings extends Activity implements OnCheckedChangeListener, OnClickListener, OnSeekBarChangeListener, OnColorChangedListener {
 
 	private static final String TAG = WallPaperSettings.class.getSimpleName();
-	private static final int DATA_TYPE_REQUEST_CODE = 107;
 	private static final int PROCESS_DIALOG = 101;
-	private static final int FRAMERATE_DIALOG = 102;
 	private static final int ELEMENT_COUNT = 103;
 	private static final int TEXT_SIZE_DIALOG = 104;
 	private static final int FONTS_DIALOG = 105;
-	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mLinesOnScreen,mProcessQty, mElementCountTV, mDataTypeTV, mFontsTV;
+	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mLinesOnScreen, mProcessQty, mFontsTV;
 	private CheckBox mRandomColorCB, mAnimBackCB;
 	private ListView mListView;
 	private Settings mSettings;
 	// textsizesettings
-	private SeekBar mTextSettingsMinSeekBar, mTextSettingsMaxSeekBar, mSeekBar;
-	private TextView mTextValueMin, mTextValueMax, mTextSettingsMin, mSeekValue;
+	private SeekBar  mSeekBar;
+	private TextView mSeekValue;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +67,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 		mFontsTV = (TextView) findViewById(R.id.fonts_tv);
 		mFontsTV.setOnClickListener(this);
-		if(SettingsHolder.fonts == null){
+		if (SettingsHolder.fonts == null) {
 			mFontsTV.setEnabled(false);
-			MainExecutor.getInstance().execute(new TypefaceTask(), new TypeFaceResult());			
+			MainExecutor.getInstance().execute(new TypefaceTask(), new TypeFaceResult());
 		}
-		
 
 		mTextSizeTV = (TextView) findViewById(R.id.text_size_tv);
 		mTextSizeTV.setOnClickListener(this);
@@ -100,56 +83,51 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		mAnimBackCB.setChecked(SettingsHolder.mIsAnimatedBackground);
 		mAnimBackCB.setOnCheckedChangeListener(this);
 
-
 		mBackgroundColorPickerTV = (TextView) findViewById(R.id.background_color_picker_tv);
 		mBackgroundColorPickerTV.setOnClickListener(this);
 		mBackgroundColorPickerTV.setEnabled(!SettingsHolder.mIsAnimatedBackground);
 
 		mLinesOnScreen = (TextView) findViewById(R.id.elements_tv);
 		mLinesOnScreen.setOnClickListener(this);
-		
+
 		mProcessQty = (TextView) findViewById(R.id.process_tv);
 		mProcessQty.setOnClickListener(this);
-/*
-		mElementCountTV = (TextView) findViewById(R.id.element_count_tv);
-		mElementCountTV.setOnClickListener(this);*/
 
 		mTextColorPickerTV = (TextView) findViewById(R.id.text_color_picker_tv);
 		mTextColorPickerTV.setOnClickListener(this);
 		mTextColorPickerTV.setEnabled(!SettingsHolder.isRandomTextColor);
-		
+
 	}
-	
-	class TypefaceTask implements Task<Typeface []>{
+
+	class TypefaceTask implements Task<Typeface[]> {
 
 		@Override
 		public Typeface[] fullfill() {
-			
-			
-			Typeface [] typefaces = new Typeface[WConstants.FONT_FILES.length];
+
+			Typeface[] typefaces = new Typeface[WConstants.FONT_FILES.length];
 			for (int i = 0; i < typefaces.length; i++) {
 				typefaces[i] = Util.getCustomTypeface(WConstants.FONT_FILES[i]);
 			}
-			
+
 			return typefaces;
 		}
-		
+
 	}
-	
-	class TypeFaceResult implements CallBack<Typeface []>{
+
+	class TypeFaceResult implements CallBack<Typeface[]> {
 
 		@Override
 		public void fullfilled(Typeface[] o) {
 			SettingsHolder.fonts = o;
 			mFontsTV.post(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					mFontsTV.setEnabled(true);
 				}
 			});
 		}
-		 
+
 	}
 
 	@Override
@@ -168,12 +146,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		/*case R.id.textsize_tv:
-			showDialog(TEXTSIZE_DIALOG);
-			break;*/
 		case R.id.text_size_tv:
 			showDialog(TEXT_SIZE_DIALOG);
 			break;
@@ -197,7 +173,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		case R.id.elements_tv:
 			showDialog(ELEMENT_COUNT);
 			break;
-			
+
 		case R.id.process_tv:
 			showDialog(PROCESS_DIALOG);
 			break;
@@ -214,7 +190,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	protected Dialog onCreateDialog(int id) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
 		switch (id) {
-		
+
 		case ELEMENT_COUNT:
 			WLog.i(TAG, "ELEMENT_COUNT");
 			adb.setTitle(getString(R.string.element_count_tv));
@@ -251,7 +227,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			View viewFont = (LinearLayout) getLayoutInflater().inflate(R.layout.list_layout, null);
 			adb.setView(viewFont);
 			mListView = (ListView) viewFont.findViewById(R.id.custom_list);
-			
+
 			return adb.create();
 
 		default:
@@ -281,22 +257,23 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 				ctv = (CheckedTextView) convertView.findViewById(android.R.id.text1);
 			Typeface tmpTypeFace = SettingsHolder.fonts[position];
 			ctv.setTypeface(tmpTypeFace);
-			ctv.setHeight((int)getResources().getDimension(R.dimen.settings_main_item_height));
+			ctv.setHeight((int) getResources().getDimension(R.dimen.settings_main_item_height));
 			ctv.setText(mValues[position]);
 			return convertView;
 		}
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onPrepareDialog(int id, final Dialog dialog) {
 
 		switch (id) {
-		
+
 		case PROCESS_DIALOG:
 			mSeekBar.setTag(PROCESS_DIALOG);
 			mSeekBar.setProgress(mSettings.getProcessQty());
-			mSeekValue.setText(String.valueOf(mSettings.getProcessQty())); 
+			mSeekValue.setText(String.valueOf(mSettings.getProcessQty()));
 			break;
 		case ELEMENT_COUNT:
 			mSeekBar.setTag(ELEMENT_COUNT);
@@ -309,7 +286,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					mSettings.setFontSize(position, ProgressDialog.show(WallPaperSettings.this, null, "Generating Font"));
+					mSettings.setFontSize(position, ProgressDialog.show(WallPaperSettings.this, null, getString(R.string.generating_font)));
 					dialog.cancel();
 				}
 			});
@@ -323,14 +300,13 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					mSettings.setFont(position, ProgressDialog.show(WallPaperSettings.this, null, "Generating Font"));
-					dialog.cancel(); 
-					
+					mSettings.setFont(position, ProgressDialog.show(WallPaperSettings.this, null, getString(R.string.generating_font)));
+					dialog.cancel();
+
 				}
 			});
 
 			break;
-			
 
 		default:
 			break;
@@ -338,23 +314,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		super.onPrepareDialog(id, dialog);
 	}
 
-
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		switch (seekBar.getId()) {
-		case R.id.textsize_min_settings_seekbar:
-			if (mTextSettingsMaxSeekBar.getProgress() < progress) {
-				// if(mSettings.isRandomTextSize())
-				mTextSettingsMaxSeekBar.setProgress(progress);
-			}
-			mTextValueMin.setText(String.valueOf(progress));
-			break;
-		case R.id.textsize_max_settings_seekbar:
-			if (mTextSettingsMinSeekBar.getProgress() > progress) {
-				mTextSettingsMinSeekBar.setProgress(progress);
-			}
-			mTextValueMax.setText(String.valueOf(progress));
-			break;
 		case R.id.my_seekbar:
 
 			if (progress == 0)
@@ -394,12 +356,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSettings.setCustomTextColor(color);
 			break;
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		WallController.getInstance().onOptionsChanged();
 	}
 
 }

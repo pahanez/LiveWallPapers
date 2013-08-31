@@ -1,9 +1,8 @@
 package com.pahanez.mywall.settings;
 
-import com.badlogic.gdx.graphics.Color;
-import com.pahanez.mywall.utils.WLog;
-
 import android.graphics.Typeface;
+
+import com.badlogic.gdx.graphics.Color;
 
 
 public class SettingsHolder implements OnSettingsChangedListener{

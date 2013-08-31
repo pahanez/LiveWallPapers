@@ -1,6 +1,5 @@
 package com.pahanez.mywall.font;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import android.app.Dialog;

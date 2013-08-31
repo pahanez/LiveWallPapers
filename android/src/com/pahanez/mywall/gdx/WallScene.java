@@ -9,7 +9,6 @@ import java.util.Random;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidWallpaperListener;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -23,16 +22,14 @@ import com.pahanez.mywall.font.CustomFont;
 import com.pahanez.mywall.settings.OnSettingsChangedListener;
 import com.pahanez.mywall.settings.Settings;
 import com.pahanez.mywall.settings.SettingsHolder;
-import com.pahanez.mywall.utils.WLog;
 
 public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener {
 
-	private static final String TAG = WallPaper.class.getSimpleName();
+	private static final String TAG = WallScene.class.getSimpleName();
 
 	private Stage mStage;
 	public final static int DEFAULT_FRAME_INTERVAL = 60;
 	private CustomFont mCustomFont ;
-	private SettingsHolder mSettingsHolder ;
 	private Random mRandom = new Random();
 	private int mWidth;
 	private int mHeight;
@@ -40,6 +37,7 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 	private TopParser mTopParser = new TopParser();
 	private ShaderProgram mShaderProgram;
 	private SpriteBatch mSpriteBatch;
+	private CustomRenderer mBackgroundRenderer;
 	private Texture mTexture;
 	private float walk;
 
@@ -62,8 +60,7 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 
 			}
 		} 
-		if(SettingsHolder.mIsAnimatedBackground) renderAnimatedBackground();
-		else renderSimpleBackGround();
+		mBackgroundRenderer.render();
 			
 		
 		mStage.act(); 
@@ -77,13 +74,7 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 	}
 
 	private class CustomActor extends Actor {
-		private int position = 0;
 		private String value;
-		public void increment(){
-			position++;
-			if(position > 100)
-				position = 0;
-		}
 		public void setValue(String str){
 			value = new String(str);
 		}
@@ -114,14 +105,13 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 		mHeight = Gdx.graphics.getHeight();
 		
 		mCustomFont = new CustomFont();
-		mSettingsHolder = new SettingsHolder();
+		new SettingsHolder();
 
 		mStage = new Stage(mWidth, mHeight, true);
 		
 		Settings.getInstance().registerOnSettingsChangedListener(this);
 		
-		initActorList();
-		
+		onSettingsChanged();
 		ShaderProgram.pedantic = false;
 		mShaderProgram = new ShaderProgram(VERT, FRAG);
 		if (mShaderProgram.isCompiled() == false) {
@@ -140,10 +130,8 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 				actor.clear();
 				mStage.clear();
 				actor = null;
-				
 			}
 			mActors.clear();
-			
 		}
 		
 		for (int i = 0; i < SettingsHolder.mElementsCount; i++) {
@@ -166,8 +154,8 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 			}
 			actor.setX(mRandom.nextInt(mWidth));
 			actor.setY(mRandom.nextInt(mHeight));
-			actor.increment();
 			actor.setValue(mTopParser.getRandomTopElement());
+			
 			actor.addAction(sequence(CustomActions.getRandomAction(), run(new Runnable() {
 
 				@Override
@@ -204,22 +192,35 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 		
 	}
 	
-	private void renderAnimatedBackground(){
-		mSpriteBatch.begin();
-		mShaderProgram.setUniformf("time", walk -= 0.002);
-		if (walk <= -300)
-			walk = 0;
-		mSpriteBatch.draw(mTexture, 0, 0, mWidth, mHeight);
-		mSpriteBatch.end();
+	private interface CustomRenderer{
+		void render();
 	}
 	
-	private void renderSimpleBackGround(){
-		Gdx.gl.glClearColor(SettingsHolder.mCustomBackgroundColor.r, SettingsHolder.mCustomBackgroundColor.g, SettingsHolder.mCustomBackgroundColor.b, 1.0F);
+	private class AnimationRenderer implements CustomRenderer{
+
+		@Override
+		public void render() {
+			mSpriteBatch.begin();
+			mShaderProgram.setUniformf("time", walk -= 0.002);
+			if (walk <= -300)
+				walk = 0;
+			mSpriteBatch.draw(mTexture, 0, 0, mWidth, mHeight);
+			mSpriteBatch.end();
+		}
 	}
+	
+	private class PlainRenderer implements CustomRenderer{
+
+		@Override
+		public void render() {
+			Gdx.gl.glClearColor(SettingsHolder.mCustomBackgroundColor.r, SettingsHolder.mCustomBackgroundColor.g, SettingsHolder.mCustomBackgroundColor.b, 1.0F);
+		}}
+	
 
 	@Override
 	public void onSettingsChanged() {
 		initActorList();
+		mBackgroundRenderer = SettingsHolder.mIsAnimatedBackground ? new AnimationRenderer() : new PlainRenderer();
 	}
 	
 }
