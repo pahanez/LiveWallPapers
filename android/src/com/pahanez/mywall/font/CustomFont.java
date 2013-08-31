@@ -1,6 +1,9 @@
 package com.pahanez.mywall.font;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
+import android.app.Dialog;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -9,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.pahanez.mywall.MainExecutor;
 import com.pahanez.mywall.WConstants;
 import com.pahanez.mywall.settings.Settings;
-import com.pahanez.mywall.utils.WLog;
 
 public class CustomFont implements OnFontChangedListener {
 
@@ -19,7 +21,7 @@ public class CustomFont implements OnFontChangedListener {
 	private int file;
 	private Settings mSettings = Settings.getInstance();
 
-	private BitmapFont mCustomFont;
+	private AtomicReference<BitmapFont> mCustomFontReference = new AtomicReference<BitmapFont>();
 	float one_cm = Gdx.graphics.getPpcY();
 
 	public CustomFont() {
@@ -29,12 +31,12 @@ public class CustomFont implements OnFontChangedListener {
 
 	}
 
-	public synchronized BitmapFont getmCustomFont() {
-		return mCustomFont;
+	public BitmapFont getmCustomFont() {
+		return mCustomFontReference.get();
 	}
 
 	public void setmCustomFont(BitmapFont mCustomFont) {
-		this.mCustomFont = mCustomFont;
+		mCustomFontReference.set(mCustomFont);
 	}
 
 	private int getSize() {
@@ -42,33 +44,28 @@ public class CustomFont implements OnFontChangedListener {
 	}
 
 	@Override
-	public void fontChanged() {
+	public void fontChanged(final Dialog d) {
 		MainExecutor.getInstance().execute(new Runnable() {
 
 			@Override
 			public void run() {
-				
 					createFont();
+					d.dismiss();
 			}
 		});
 	}
 
-	private synchronized void createFont() {
+	private void createFont() {
 		size = mSettings.getFontSize();
 		file = mSettings.getFont();
 		
 		
 		FileHandle fontFile = Gdx.files.internal(WConstants.FONTS_FOLDER + WConstants.FONT_FILES[file]);
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
-		mCustomFont = generator.generateFont((int) (mFontsFactor[getSize()] * one_cm));
+		BitmapFont mustomFont = generator.generateFont((int) (mFontsFactor[getSize()] * one_cm));
 		generator.dispose();
 		
-		try { 
-			TimeUnit.SECONDS.sleep(1); //wtf
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		setmCustomFont(mustomFont);
 		
 	}
 

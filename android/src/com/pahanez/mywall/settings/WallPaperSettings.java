@@ -5,6 +5,7 @@ import java.io.File;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -308,7 +309,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					mSettings.setFontSize(position);
+					mSettings.setFontSize(position, ProgressDialog.show(WallPaperSettings.this, null, "Generating Font"));
 					dialog.cancel();
 				}
 			});
@@ -322,8 +323,9 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					mSettings.setFont(position);
+					mSettings.setFont(position, ProgressDialog.show(WallPaperSettings.this, null, "Generating Font"));
 					dialog.cancel(); 
+					
 				}
 			});
 

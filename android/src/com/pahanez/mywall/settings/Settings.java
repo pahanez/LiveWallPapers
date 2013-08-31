@@ -2,6 +2,7 @@ package com.pahanez.mywall.settings;
 
 import java.util.ArrayList;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -183,19 +184,19 @@ public class Settings {
 		return mSharedPrefs.getInt(FONT_SIZE, DEFAULT_FONT_VALUE);
 	}
 
-	public void setFontSize(int value) {
+	public void setFontSize(int value,Dialog d) {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(FONT_SIZE, value);
 		editor.commit();
-		mOnFontChangedListener.fontChanged();
+		mOnFontChangedListener.fontChanged(d);
 	
 	}
 	
-	public void setFont(int font) {
+	public void setFont(int font, Dialog d) {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(FONT, font);
 		editor.commit();
-		mOnFontChangedListener.fontChanged();
+		mOnFontChangedListener.fontChanged(d);
 	}
 
 	public int getFont() {
