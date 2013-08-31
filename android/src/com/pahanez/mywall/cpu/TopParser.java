@@ -40,7 +40,7 @@ public class TopParser {
 				int i = 0;
 				while ((str = br.readLine()) != null) {
 					if(i++<=5)	continue;
-					
+					 
 					String[] tmp = str.trim().split(" ");
 					String goal = null;
 					for (String s : tmp) {
@@ -48,7 +48,7 @@ public class TopParser {
 							goal = s; 
 					}
 					if (!str.trim().isEmpty())
-						process.add("[ " + tmp[0] + " | " + goal + " | " + tmp[tmp.length - 1] + " ]");
+						process.add("* " + tmp[0] + " : " + goal + " : " + tmp[tmp.length - 1] + " *");
 				}
 				return process;
 			} catch (IOException e) {

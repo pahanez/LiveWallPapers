@@ -14,8 +14,8 @@ import com.pahanez.mywall.settings.Settings;
 
 public class CustomFont implements OnFontChangedListener {
 
-	public static final String[] mFontsId = { "xs", "s", "m", "l", "xl" };
-	public static final float[] mFontsFactor = { 0.125F, 0.25F, 0.5F, 1, 1.5F };
+	//public static final String[] mFontsId = { "xs", "s", "m", "l", "xl" };
+	public static final float[] mFontsFactor = { 0.125F, 0.175F, 0.3F, 0.6F, 1.0F };
 	private int size;
 	private int file;
 	private Settings mSettings = Settings.getInstance();

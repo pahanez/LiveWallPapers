@@ -16,7 +16,7 @@
     <string name="generating_font">Generating Font</string>
     <string name="textsize_max">MAX</string>
     <!-- /TextSize -->
-    <!-- FrameRate -->
+    <!-- FrameRate --> 
     <string name="frame_rate_tv">Frame Rate</string>
     <string name="value_tv">Value</string>
     <!-- /FrameRate -->
@@ -24,22 +24,11 @@
     <string name="choose_background_color_text">Choose background color</string>
     <string name="background_settings">Background Settings</string>
     <!-- /Background -->
-     <string name="main_settings">Main Settings</string>
-    <!-- Element Count -->
+    <string name="main_settings">Main Settings</string>
     <string name="element_count_tv">Lines on Screen</string>
-    <!-- /Element Count -->
     <string name="proces_count_tv">Process Quantity</string>
-    <!-- Data Type -->
-    <string name="data_type_name">Choose Data Type</string>
     <string name="cpu_loading">Loading…</string>
-    <string name="choose_file">Choose file</string>
 
-    <string-array name="data_type_values">
-        <item>CPU</item>
-        <item>Time</item>
-        <item>Custom file</item>
-    </string-array> 
-    <!-- /Data Type -->
 
 
     <!-- Fonts -->
@@ -49,7 +38,7 @@
         <item>Spectrum</item>
         <item>Merchant</item>
         <item>CodeMan</item>
-        <item>Basic</item>
+        <item>Electronic</item>
         <item>Advocut</item>
         <item>Arcade</item>
         <item>X-Space</item>
