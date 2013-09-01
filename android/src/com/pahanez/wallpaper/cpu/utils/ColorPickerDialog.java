@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pahanez.mywall.utils;
+package com.pahanez.wallpaper.cpu.utils;
 import net.margaritov.preference.colorpicker.ColorPickerPanelView;
 import net.margaritov.preference.colorpicker.ColorPickerView;
 import android.app.Dialog;
@@ -24,7 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.pahanez.mywall.R;
+import com.pahanez.wallpaper.cpu.R;
 
 public class ColorPickerDialog 
 	extends 

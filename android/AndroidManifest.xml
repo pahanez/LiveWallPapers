@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pahanez.mywall"
+    package="com.pahanez.wallpaper.cpu"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,11 +8,11 @@
     <uses-feature android:name="android.software.live_wallpaper" />
 
     <application
-        android:name=".WallApplication"
+        android:name="com.pahanez.wallpaper.cpu.WallApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <service
-            android:name=".CustomWallPaperService"
+            android:name="com.pahanez.wallpaper.cpu.CustomWallPaperService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_WALLPAPER" >
             <intent-filter>
@@ -25,23 +25,10 @@
         </service>
 
         <activity
-            android:name="com.pahanez.mywall.settings.WallPaperSettings"
+            android:name="com.pahanez.wallpaper.cpu.settings.WallPaperSettings"
             android:exported="true"
             android:label="@string/menu_settings"
             android:theme="@android:style/Theme.Light.WallpaperSettings" />
-        <activity
-            android:name="com.ipaulpro.afilechooser.FileChooserActivity"
-            android:icon="@drawable/ic_chooser"
-            android:label="@string/choose_file" >
-            <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.OPENABLE" />
-
-                <data android:mimeType="*/*" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

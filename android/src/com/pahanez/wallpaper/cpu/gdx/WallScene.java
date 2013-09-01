@@ -1,4 +1,4 @@
-package com.pahanez.mywall.gdx;
+package com.pahanez.wallpaper.cpu.gdx;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -17,11 +17,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.pahanez.mywall.cpu.TopParser;
-import com.pahanez.mywall.font.CustomFont;
-import com.pahanez.mywall.settings.OnSettingsChangedListener;
-import com.pahanez.mywall.settings.Settings;
-import com.pahanez.mywall.settings.SettingsHolder;
+import com.pahanez.wallpaper.cpu.cpu.TopParser;
+import com.pahanez.wallpaper.cpu.font.CustomFont;
+import com.pahanez.wallpaper.cpu.settings.OnSettingsChangedListener;
+import com.pahanez.wallpaper.cpu.settings.Settings;
+import com.pahanez.wallpaper.cpu.settings.SettingsHolder;
 
 public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener {
 

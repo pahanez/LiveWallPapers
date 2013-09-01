@@ -1,4 +1,4 @@
-package com.pahanez.mywall;
+package com.pahanez.wallpaper.cpu;
 
 public interface WConstants {
 	final int DEFAULT_BACKGROUND_COLOR = 0xFF000000;

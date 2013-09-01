@@ -1,4 +1,4 @@
-package com.pahanez.mywall.utils;
+package com.pahanez.wallpaper.cpu.utils;
 
 import android.util.Log;
 

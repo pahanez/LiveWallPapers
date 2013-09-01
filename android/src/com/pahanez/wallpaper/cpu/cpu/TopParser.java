@@ -1,4 +1,4 @@
-package com.pahanez.mywall.cpu;
+package com.pahanez.wallpaper.cpu.cpu;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,12 +9,12 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
-import com.pahanez.mywall.MainExecutor;
-import com.pahanez.mywall.MainExecutor.CallBack;
-import com.pahanez.mywall.MainExecutor.Task;
-import com.pahanez.mywall.R;
-import com.pahanez.mywall.WallApplication;
-import com.pahanez.mywall.settings.SettingsHolder;
+import com.pahanez.wallpaper.cpu.MainExecutor;
+import com.pahanez.wallpaper.cpu.MainExecutor.CallBack;
+import com.pahanez.wallpaper.cpu.MainExecutor.Task;
+import com.pahanez.wallpaper.cpu.R;
+import com.pahanez.wallpaper.cpu.WallApplication;
+import com.pahanez.wallpaper.cpu.settings.SettingsHolder;
 
 public class TopParser {
 	private static final String TOP = "top -n 1 -m ";

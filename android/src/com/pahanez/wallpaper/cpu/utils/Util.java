@@ -1,8 +1,8 @@
-package com.pahanez.mywall.utils;
+package com.pahanez.wallpaper.cpu.utils;
 
 import android.graphics.Typeface;
 
-import com.pahanez.mywall.WallApplication;
+import com.pahanez.wallpaper.cpu.WallApplication;
 
 public class Util {
 	public static Typeface getCustomTypeface(String typefaceName) {

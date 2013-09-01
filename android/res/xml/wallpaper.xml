@@ -20,6 +20,6 @@
 <!-- The attributes in this XML file provide configuration information -->
 
 <wallpaper  xmlns:android="http://schemas.android.com/apk/res/android"
-    		android:thumbnail="@drawable/ic_launcher"
-    		android:settingsActivity="com.pahanez.mywall.settings.WallPaperSettings"
+    		android:thumbnail="@drawable/wallpreview"
+    		android:settingsActivity="com.pahanez.wallpaper.cpu.settings.WallPaperSettings"
 />

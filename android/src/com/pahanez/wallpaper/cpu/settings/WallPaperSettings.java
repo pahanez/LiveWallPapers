@@ -1,4 +1,4 @@
-package com.pahanez.mywall.settings;
+package com.pahanez.wallpaper.cpu.settings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,15 +24,15 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.pahanez.mywall.MainExecutor;
-import com.pahanez.mywall.MainExecutor.CallBack;
-import com.pahanez.mywall.MainExecutor.Task;
-import com.pahanez.mywall.R;
-import com.pahanez.mywall.WConstants;
-import com.pahanez.mywall.utils.ColorPickerDialog;
-import com.pahanez.mywall.utils.ColorPickerDialog.OnColorChangedListener;
-import com.pahanez.mywall.utils.Util;
-import com.pahanez.mywall.utils.WLog;
+import com.pahanez.wallpaper.cpu.MainExecutor;
+import com.pahanez.wallpaper.cpu.MainExecutor.CallBack;
+import com.pahanez.wallpaper.cpu.MainExecutor.Task;
+import com.pahanez.wallpaper.cpu.R;
+import com.pahanez.wallpaper.cpu.WConstants;
+import com.pahanez.wallpaper.cpu.utils.ColorPickerDialog;
+import com.pahanez.wallpaper.cpu.utils.ColorPickerDialog.OnColorChangedListener;
+import com.pahanez.wallpaper.cpu.utils.Util;
+import com.pahanez.wallpaper.cpu.utils.WLog;
 
 public class WallPaperSettings extends Activity implements OnCheckedChangeListener, OnClickListener, OnSeekBarChangeListener, OnColorChangedListener {
 

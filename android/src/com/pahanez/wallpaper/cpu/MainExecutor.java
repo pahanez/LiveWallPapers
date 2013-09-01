@@ -1,5 +1,5 @@
 
-package com.pahanez.mywall;
+package com.pahanez.wallpaper.cpu;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

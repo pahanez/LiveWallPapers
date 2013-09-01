@@ -1,4 +1,4 @@
-package com.pahanez.mywall.font;
+package com.pahanez.wallpaper.cpu.font;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -8,9 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.pahanez.mywall.MainExecutor;
-import com.pahanez.mywall.WConstants;
-import com.pahanez.mywall.settings.Settings;
+import com.pahanez.wallpaper.cpu.MainExecutor;
+import com.pahanez.wallpaper.cpu.WConstants;
+import com.pahanez.wallpaper.cpu.settings.Settings;
 
 public class CustomFont implements OnFontChangedListener {
 

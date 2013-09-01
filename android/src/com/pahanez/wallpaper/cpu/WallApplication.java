@@ -1,4 +1,4 @@
-package com.pahanez.mywall;
+package com.pahanez.wallpaper.cpu;
 
 import android.app.Application;
 import android.content.Context;

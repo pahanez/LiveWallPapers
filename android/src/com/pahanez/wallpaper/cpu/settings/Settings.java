@@ -1,4 +1,4 @@
-package com.pahanez.mywall.settings;
+package com.pahanez.wallpaper.cpu.settings;
 
 import java.util.ArrayList;
 
@@ -8,9 +8,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.badlogic.gdx.graphics.Color;
-import com.pahanez.mywall.WConstants;
-import com.pahanez.mywall.WallApplication;
-import com.pahanez.mywall.font.OnFontChangedListener;
+import com.pahanez.wallpaper.cpu.WConstants;
+import com.pahanez.wallpaper.cpu.WallApplication;
+import com.pahanez.wallpaper.cpu.font.OnFontChangedListener;
 
 public class Settings {
 	private static Settings mInstance;

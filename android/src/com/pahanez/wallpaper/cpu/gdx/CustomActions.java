@@ -1,4 +1,4 @@
-package com.pahanez.mywall.gdx;
+package com.pahanez.wallpaper.cpu.gdx;
 
 import java.util.Random;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;

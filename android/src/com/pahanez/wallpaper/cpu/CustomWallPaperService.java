@@ -1,9 +1,9 @@
-package com.pahanez.mywall;
+package com.pahanez.wallpaper.cpu;
 
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidLiveWallpaperService;
-import com.pahanez.mywall.gdx.WallScene;
-import com.pahanez.mywall.utils.WLog;
+import com.pahanez.wallpaper.cpu.gdx.WallScene;
+import com.pahanez.wallpaper.cpu.utils.WLog;
 
 public class CustomWallPaperService extends AndroidLiveWallpaperService {
 	private static final String TAG = CustomWallPaperService.class.getSimpleName();

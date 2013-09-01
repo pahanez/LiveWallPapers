@@ -1,4 +1,4 @@
-package com.pahanez.mywall.settings;
+package com.pahanez.wallpaper.cpu.settings;
 
 import android.graphics.Typeface;
 

@@ -1,4 +1,4 @@
-package com.pahanez.mywall.font;
+package com.pahanez.wallpaper.cpu.font;
 
 import android.app.Dialog;
 
