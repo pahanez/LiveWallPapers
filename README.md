@@ -9,6 +9,7 @@ Dependencies
 =====================
 
 1. libGDX http://libgdx.badlogicgames.com/nightlies/
+
 - gdx.jar
 - gdx-backend-android.jar
 - gdx-freetype.jar
