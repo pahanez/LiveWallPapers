@@ -14,6 +14,7 @@ Dependencies
 - gdx.jar
 - gdx-backend-android.jar
 - gdx-freetype.jar
+
 2.Color Picker(https://github.com/attenzione/android-ColorPickerPreference)
 
 =====================
