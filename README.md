@@ -18,6 +18,6 @@ Dependencies
 Screens
 =====================
 
-* .. image:: https://github.com/pahanez/LiveWallPapers/tree/libgdx_version/screens/screen_1.png
+* .. image:: https://github.com/pahanez/LiveWallPapers/blob/libgdx_version/screens/screen-1.png
 
-* .. image:: https://github.com/pahanez/LiveWallPapers/tree/libgdx_version/screens/screen_2.png
+* .. image:: https://github.com/pahanez/LiveWallPapers/blob/libgdx_version/screens/screen-2.png
