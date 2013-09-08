@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import android.app.Dialog;
 import android.graphics.BlurMaskFilter;
+import android.widget.Toast;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitm
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.pahanez.wallpaper.cpu.MainExecutor;
 import com.pahanez.wallpaper.cpu.WConstants;
+import com.pahanez.wallpaper.cpu.WallApplication;
 import com.pahanez.wallpaper.cpu.settings.Settings;
 import com.pahanez.wallpaper.cpu.utils.WLog;
 
