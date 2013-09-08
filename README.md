@@ -18,6 +18,8 @@ Dependencies
 Screens
 =====================
 
-![Screenshot](https://raw.github.com/pahanez/LiveWallPapers/libgdx_version/screens/screen-1.png)
+<img src="https://raw.github.com/pahanez/LiveWallPapers/libgdx_version/screens/screen-7.png">
 
 <img src="https://raw.github.com/pahanez/LiveWallPapers/libgdx_version/screens/screen-1.png">
+
+<img src="https://raw.github.com/pahanez/LiveWallPapers/libgdx_version/screens/screen-2.png">
