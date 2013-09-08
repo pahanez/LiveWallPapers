@@ -22,7 +22,4 @@ Screens
 
 * .. image:: https://github.com/pahanez/LiveWallPapers/blob/libgdx_version/screens/screen-2.png
 
-*<div style="text-align:center;">
-  <img width="100%"
-       src="https://github.com/pahanez/LiveWallPapers/blob/libgdx_version/screens/screen-1.png">
-</div>
+*<img src="https://github.com/pahanez/LiveWallPapers/blob/libgdx_version/screens/screen-1.png">
