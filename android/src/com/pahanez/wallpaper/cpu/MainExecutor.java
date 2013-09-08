@@ -5,10 +5,18 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 public class MainExecutor {
     private ExecutorService mParserExecutor = Executors.newSingleThreadExecutor();
-    private ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
+    private ExecutorService mExecutorService = Executors.newSingleThreadExecutor(new ThreadFactory() {
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread thread = new Thread(r);
+			thread.setPriority(Thread.MIN_PRIORITY);
+			return thread;
+		}
+	});
     private volatile boolean mIsVisible = true;
     private List<Runnable> cache = new CopyOnWriteArrayList<Runnable>();
 

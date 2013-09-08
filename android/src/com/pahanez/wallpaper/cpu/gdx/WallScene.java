@@ -199,7 +199,7 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 	private class AnimationRenderer implements CustomRenderer{
 
 		@Override
-		public void render() {
+		public void render() { 
 			mSpriteBatch.begin();
 			mShaderProgram.setUniformf("time", walk -= 0.002);
 			if (walk <= -300)

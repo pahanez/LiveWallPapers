@@ -14,6 +14,7 @@ public class CustomWallPaperService extends AndroidLiveWallpaperService {
 				MainExecutor.getInstance().setVisible(visible);
 				super.onVisibilityChanged(visible);
 			}
+			
 		};
 	};
 	
@@ -26,6 +27,7 @@ public class CustomWallPaperService extends AndroidLiveWallpaperService {
 		cfg.useGL20 = true;
 		initialize(new WallScene(), cfg);
 	}
+	
 	
 
 }

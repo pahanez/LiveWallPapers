@@ -217,9 +217,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			View viewDataType = (LinearLayout) getLayoutInflater().inflate(R.layout.list_layout, null);
 			adb.setView(viewDataType);
 			mListView = (ListView) viewDataType.findViewById(R.id.custom_list);
-			ArrayAdapter<String> adapterDataTypes = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_values));
-			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-			mListView.setAdapter(adapterDataTypes);
+			
 			return adb.create();
 		case FONTS_DIALOG:
 			WLog.i(TAG, "FONTS_DIALOG");
@@ -230,7 +228,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 			return adb.create();
 
-		default:
+		default: 
 			break;
 		}
 		return null;
@@ -259,9 +257,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			ctv.setTypeface(tmpTypeFace);
 			ctv.setHeight((int) getResources().getDimension(R.dimen.settings_main_item_height));
 			ctv.setText(mValues[position]);
+			ctv.setTextColor(getResources().getColor(android.R.color.white));
 			return convertView;
 		}
-
+ 
 	}
 
 	@SuppressWarnings("deprecation")
@@ -281,6 +280,12 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSeekValue.setText(String.valueOf(mSettings.getElementsCount()));
 			break;
 		case TEXT_SIZE_DIALOG:
+			WLog.e("TEXT_SIZE_DIALOG");
+			
+			ArrayAdapter<String> adapterDataTypes = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_values));
+			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+			mListView.setAdapter(adapterDataTypes);
+			
 			mListView.setItemChecked(mSettings.getFontSize(), true);
 			mListView.setOnItemClickListener(new OnItemClickListener() {
 
