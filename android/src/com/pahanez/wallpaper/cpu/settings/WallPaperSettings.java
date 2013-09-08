@@ -237,11 +237,13 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	private class CustomAdapter extends ArrayAdapter<String> {
 		private LayoutInflater mInflater;
 		private String[] mValues;
+		private int mCurrentType;
 
-		public CustomAdapter(Context context, int textViewResourceId, String[] objects) {
+		public CustomAdapter(Context context, int textViewResourceId, String[] objects,int type) {
 			super(context, textViewResourceId, objects);
 			mInflater = getLayoutInflater();
 			mValues = objects;
+			mCurrentType = type;
 		}
 
 		@Override
@@ -254,9 +256,14 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			} else
 				ctv = (CheckedTextView) convertView.findViewById(android.R.id.text1);
 			Typeface tmpTypeFace = SettingsHolder.fonts[position];
-			ctv.setTypeface(tmpTypeFace);
-			ctv.setHeight((int) getResources().getDimension(R.dimen.settings_main_item_height));
+			switch (mCurrentType) {
+			case FONTS_DIALOG:
+				ctv.setTypeface(tmpTypeFace);
+				ctv.setHeight((int) getResources().getDimension(R.dimen.settings_main_item_height));
+				break;
+			}
 			ctv.setText(mValues[position]);
+			ctv.setHeight(100);
 			ctv.setTextColor(getResources().getColor(android.R.color.white));
 			return convertView;
 		}
@@ -282,9 +289,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		case TEXT_SIZE_DIALOG:
 			WLog.e("TEXT_SIZE_DIALOG");
 			
-			ArrayAdapter<String> adapterDataTypes = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_values));
+			ArrayAdapter<String> adapterTextSize = new CustomAdapter(this, android.R.layout.simple_list_item_single_choice/*R.layout.checkedtextview*/, getResources().getStringArray(R.array.fonts_values),TEXT_SIZE_DIALOG);
 			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-			mListView.setAdapter(adapterDataTypes);
+			mListView.setAdapter(adapterTextSize);
+			
 			
 			mListView.setItemChecked(mSettings.getFontSize(), true);
 			mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -297,7 +305,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			});
 			break;
 		case FONTS_DIALOG:
-			ArrayAdapter<String> adapterFonts = new CustomAdapter(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_names));
+			ArrayAdapter<String> adapterFonts = new CustomAdapter(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_names),FONTS_DIALOG);
 			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			mListView.setAdapter(adapterFonts);
 			mListView.setItemChecked(mSettings.getFont(), true);
