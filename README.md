@@ -8,15 +8,16 @@ Unix "top" command output on your home screen.
 Dependencies
 =====================
 
-1. libGDX(http://libgdx.badlogicgames.com/nightlies/)
+1. libGDX http://libgdx.badlogicgames.com/nightlies/
 - gdx.jar
 - gdx-backend-android.jar
 - gdx-freetype.jar
 
-2. Color Picker(https://github.com/attenzione/android-ColorPickerPreference)
+2. Color Picker https://github.com/attenzione/android-ColorPickerPreference
 
 Screens
 =====================
 
 * .. image:: https://github.com/pahanez/LiveWallPapers/tree/libgdx_version/screens/screen_1.png
-* .. image:: https://github.com/pahanez/LiveWallPapers/tree/libgdx_version/screens/screen22.png
+
+* .. image:: https://github.com/pahanez/LiveWallPapers/tree/libgdx_version/screens/screen_2.png
