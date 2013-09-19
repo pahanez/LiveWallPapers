@@ -6,8 +6,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 
-import com.badlogic.gdx.graphics.Color;
 import com.pahanez.wallpaper.cpu.WConstants;
 import com.pahanez.wallpaper.cpu.WallApplication;
 import com.pahanez.wallpaper.cpu.font.OnFontChangedListener;
@@ -88,7 +88,7 @@ public class Settings {
 	}
 
 	public int getCustomTextColor() {
-		return mSharedPrefs.getInt(CUSTOM_COLOR_TEXT_VALUE, Color.WHITE.toIntBits());
+		return mSharedPrefs.getInt(CUSTOM_COLOR_TEXT_VALUE, Color.WHITE);
 	}
 
 	public void setCustomBackgroundColor(int value) {

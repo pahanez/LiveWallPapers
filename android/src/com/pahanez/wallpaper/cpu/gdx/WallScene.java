@@ -1,29 +1,23 @@
 package com.pahanez.wallpaper.cpu.gdx;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.android.AndroidWallpaperListener;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import javax.microedition.khronos.opengles.GL10;
+
+import org.andengine.entity.sprite.batch.SpriteBatch;
+import org.andengine.opengl.shader.ShaderProgram;
+import org.andengine.opengl.texture.Texture;
+
+import android.renderscript.ProgramFragmentFixedFunction.Builder.Format;
+
 import com.pahanez.wallpaper.cpu.cpu.TopParser;
 import com.pahanez.wallpaper.cpu.font.CustomFont;
 import com.pahanez.wallpaper.cpu.settings.OnSettingsChangedListener;
 import com.pahanez.wallpaper.cpu.settings.Settings;
 import com.pahanez.wallpaper.cpu.settings.SettingsHolder;
 
-public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener {
+/*public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener {
 
 	private static final String TAG = WallScene.class.getSimpleName();
 
@@ -223,4 +217,4 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 		mBackgroundRenderer = SettingsHolder.mIsAnimatedBackground ? new AnimationRenderer() : new PlainRenderer();
 	}
 	
-}
+}*/

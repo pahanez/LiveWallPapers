@@ -1,33 +1,39 @@
 package com.pahanez.wallpaper.cpu;
 
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.badlogic.gdx.backends.android.AndroidLiveWallpaperService;
-import com.pahanez.wallpaper.cpu.gdx.WallScene;
-import com.pahanez.wallpaper.cpu.utils.WLog;
+import java.io.IOException;
 
-public class CustomWallPaperService extends AndroidLiveWallpaperService {
-	private static final String TAG = CustomWallPaperService.class.getSimpleName();
-	public Engine onCreateEngine() {
-		return new AndroidWallpaperEngine(){
-			@Override
-			public void onVisibilityChanged(boolean visible) {
-				MainExecutor.getInstance().setVisible(visible);
-				super.onVisibilityChanged(visible);
-			}
-			
-		};
-	};
-	
+import org.andengine.engine.options.EngineOptions;
+import org.andengine.entity.scene.Scene;
+import org.andengine.extension.ui.livewallpaper.BaseLiveWallpaperService;
+
+public class CustomWallPaperService extends BaseLiveWallpaperService{
+
 	@Override
-	public void onCreateApplication() { 
-		super.onCreateApplication();
-		WLog.i(TAG	, "onCreateApplication");
-		
-		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-		cfg.useGL20 = true;
-		initialize(new WallScene(), cfg);
+	public EngineOptions onCreateEngineOptions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	
 
-}
+	@Override
+	public void onCreateResources(
+			OnCreateResourcesCallback pOnCreateResourcesCallback)
+			throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
+			throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPopulateScene(Scene pScene,
+			OnPopulateSceneCallback pOnPopulateSceneCallback)
+			throws IOException {
+		// TODO Auto-generated method stub
+		
+	}}
+

@@ -1,28 +1,7 @@
 package com.pahanez.wallpaper.cpu.font;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
-import android.app.Dialog;
-import android.graphics.BlurMaskFilter;
-import android.widget.Toast;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeBitmapFontData;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.pahanez.wallpaper.cpu.MainExecutor;
-import com.pahanez.wallpaper.cpu.WConstants;
-import com.pahanez.wallpaper.cpu.WallApplication;
-import com.pahanez.wallpaper.cpu.settings.Settings;
-import com.pahanez.wallpaper.cpu.utils.WLog;
-
-public class CustomFont implements OnFontChangedListener {
+public class CustomFont {/*
 
 	//public static final String[] mFontsId = { "xs", "s", "m", "l", "xl" };
 	public static final float[] mFontsFactor = { 0.125F, 0.175F, 0.3F, 0.6F, 1.0F };
@@ -38,7 +17,7 @@ public class CustomFont implements OnFontChangedListener {
 		createFont();
 
 		mSettings.registerOnFontChangedListener(this);
-		/*MainExecutor.getInstance().execute(new Runnable() {
+		MainExecutor.getInstance().execute(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -46,7 +25,7 @@ public class CustomFont implements OnFontChangedListener {
 				generateAllFonts();
 				WLog.e(""+(System.currentTimeMillis() - time) + " , " + mFonts.size());
 			}
-		}); */
+		}); 
 		WLog.e("!!!!!!!!!!!START!!!!!!!!!!!!!!!!!!");
 
 	}
@@ -103,4 +82,4 @@ public class CustomFont implements OnFontChangedListener {
 		}
 	}
 
-}
+*/}
