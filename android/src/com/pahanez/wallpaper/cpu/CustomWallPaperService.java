@@ -6,7 +6,7 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.ui.livewallpaper.BaseLiveWallpaperService;
 
-public class CustomWallPaperService extends BaseLiveWallpaperService{
+public class CustomWallPaperService extends BaseLiveWallpaperService{ 
 
 	@Override
 	public EngineOptions onCreateEngineOptions() {
