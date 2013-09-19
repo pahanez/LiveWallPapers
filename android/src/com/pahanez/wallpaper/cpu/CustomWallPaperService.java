@@ -2,38 +2,74 @@ package com.pahanez.wallpaper.cpu;
 
 import java.io.IOException;
 
+import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
+import org.andengine.engine.options.ScreenOrientation;
+import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.text.Text;
 import org.andengine.extension.ui.livewallpaper.BaseLiveWallpaperService;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.util.adt.color.Color;
+
+import android.graphics.Typeface;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.WindowManager;
 
 public class CustomWallPaperService extends BaseLiveWallpaperService{ 
 
+	private static int CAMERA_WIDTH = 480;
+	private static int CAMERA_HEIGHT = 720;
+	private Camera mCamera;
+	private Font mFont;
+	private Scene mScene;
 	@Override
 	public EngineOptions onCreateEngineOptions() {
-		// TODO Auto-generated method stub
-		return null;
+		final DisplayMetrics displayMetrics = new DisplayMetrics();
+		 WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+		 wm.getDefaultDisplay().getMetrics(displayMetrics);
+		 wm.getDefaultDisplay().getRotation();
+		 CAMERA_WIDTH = displayMetrics.widthPixels;
+		 CAMERA_HEIGHT = displayMetrics.heightPixels;
+		 Log.e("tag",CAMERA_WIDTH + " , " + CAMERA_HEIGHT);
+		 this.mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+		  
+		 return new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
+		 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), this.mCamera);
 	}
-
+	
 	@Override
 	public void onCreateResources(
 			OnCreateResourcesCallback pOnCreateResourcesCallback)
 			throws IOException {
-		// TODO Auto-generated method stub
+		 
+		mFont = FontFactory.create(getFontManager(), getTextureManager(), 512, 64, Typeface.createFromAsset(getAssets(), "fonts/arcade.ttf"), 26, true, android.graphics.Color.WHITE);
+		getFontManager().loadFont(mFont);
 		
+		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
 			throws IOException {
-		// TODO Auto-generated method stub
-		
+		mScene = new Scene();
+		Text text = new Text(100, 300, mFont, "Kimono", getVertexBufferObjectManager());
+		Rectangle rect = new Rectangle(300, 300, 200, 200, getVertexBufferObjectManager());
+		rect.setColor(Color.WHITE);
+		mScene.attachChild(text);
+		mScene.attachChild(rect);
+		pOnCreateSceneCallback.onCreateSceneFinished(mScene);
 	}
 
 	@Override
 	public void onPopulateScene(Scene pScene,
 			OnPopulateSceneCallback pOnPopulateSceneCallback)
 			throws IOException {
-		// TODO Auto-generated method stub
-		
+		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}}
 
