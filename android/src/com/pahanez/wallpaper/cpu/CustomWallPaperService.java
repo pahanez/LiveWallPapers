@@ -64,13 +64,13 @@ public class CustomWallPaperService extends BaseLiveWallpaperService{
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
 			throws IOException {
 		mScene = new Scene();
-		Text text = new Text(300, 300, mFont, "Ki12ffs____1241", getVertexBufferObjectManager());
-		text.registerEntityModifier(new AlphaModifier(2, 1, 0));
-		Rectangle rect = new Rectangle(0, 0, 200, 200, getVertexBufferObjectManager());
-		rect.setColor(Color.WHITE);
-		text.setColor(Color.WHITE);
-		mScene.attachChild(text);
-		mScene.attachChild(rect);
+//		Text text = new Text(300, 300, mFont, "Ki12ffs____1241", getVertexBufferObjectManager());
+//		text.registerEntityModifier(new AlphaModifier(2, 1, 0));
+//		Rectangle rect = new Rectangle(0, 0, 200, 200, getVertexBufferObjectManager());
+//		rect.setColor(Color.WHITE);
+//		text.setColor(Color.WHITE);
+//		mScene.attachChild(text);
+//		mScene.attachChild(rect);
 		pOnCreateSceneCallback.onCreateSceneFinished(mScene);
 	}
 
