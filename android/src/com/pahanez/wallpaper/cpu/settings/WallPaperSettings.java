@@ -41,7 +41,7 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	private static final int ELEMENT_COUNT = 103;
 	private static final int TEXT_SIZE_DIALOG = 104;
 	private static final int FONTS_DIALOG = 105;
-	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mLinesOnScreen, mProcessQty, mFontsTV;
+	private TextView mTextSizeTV, mBackgroundColorPickerTV, mTextColorPickerTV, mLinesOnScreen, mProcessQty;
 	private CheckBox mRandomColorCB, mAnimBackCB;
 	private ListView mListView;
 	private Settings mSettings;
@@ -65,12 +65,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 	private void initUI() {
 
-		mFontsTV = (TextView) findViewById(R.id.fonts_tv);
-		mFontsTV.setOnClickListener(this);
-		if (SettingsHolder.fonts == null) {
-			mFontsTV.setEnabled(false);
-			MainExecutor.getInstance().execute(new TypefaceTask(), new TypeFaceResult());
-		}
 
 		mTextSizeTV = (TextView) findViewById(R.id.text_size_tv);
 		mTextSizeTV.setOnClickListener(this);
@@ -110,22 +104,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			}
 
 			return typefaces;
-		}
-
-	}
-
-	class TypeFaceResult implements CallBack<Typeface[]> {
-
-		@Override
-		public void fullfilled(Typeface[] o) {
-			SettingsHolder.fonts = o;
-			mFontsTV.post(new Runnable() {
-
-				@Override
-				public void run() {
-					mFontsTV.setEnabled(true);
-				}
-			});
 		}
 
 	}
@@ -177,10 +155,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		case R.id.process_tv:
 			showDialog(PROCESS_DIALOG);
 			break;
-		case R.id.fonts_tv:
-			showDialog(FONTS_DIALOG);
-			break;
-
 		default:
 			break;
 		}
@@ -299,26 +273,10 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					mSettings.setFontSize(position, ProgressDialog.show(WallPaperSettings.this, null, getString(R.string.generating_font)));
+					mSettings.setFontSize(position);
 					dialog.cancel();
 				}
 			});
-			break;
-		case FONTS_DIALOG:
-			ArrayAdapter<String> adapterFonts = new CustomAdapter(this, android.R.layout.simple_list_item_single_choice, getResources().getStringArray(R.array.fonts_names),FONTS_DIALOG);
-			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-			mListView.setAdapter(adapterFonts);
-			mListView.setItemChecked(mSettings.getFont(), true);
-			mListView.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					mSettings.setFont(position, ProgressDialog.show(WallPaperSettings.this, null, getString(R.string.generating_font)));
-					dialog.cancel();
-
-				}
-			});
-
 			break;
 
 		default:

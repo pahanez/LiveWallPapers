@@ -143,11 +143,11 @@ public class Settings {
 		return mSharedPrefs.getInt(FONT_SIZE, DEFAULT_FONT_VALUE);
 	}
 
-	public void setFontSize(int value,Dialog d) {
+	public void setFontSize(int value) {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(FONT_SIZE, value);
 		editor.commit();
-		mOnFontChangedListener.fontChanged(d);
+		mOnFontChangedListener.fontChanged(value);
 	
 	}
 	
@@ -155,7 +155,7 @@ public class Settings {
 		Editor editor = mSharedPrefs.edit();
 		editor.putInt(FONT, font);
 		editor.commit();
-		mOnFontChangedListener.fontChanged(d);
+		mOnFontChangedListener.fontChanged(font);
 	}
 
 	public int getFont() {

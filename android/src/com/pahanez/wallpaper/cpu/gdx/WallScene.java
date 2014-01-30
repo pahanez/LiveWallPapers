@@ -6,6 +6,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.util.Log;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidWallpaperListener;
@@ -13,23 +15,25 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.pahanez.wallpaper.cpu.cpu.TopParser;
-import com.pahanez.wallpaper.cpu.font.CustomFont;
+import com.pahanez.wallpaper.cpu.font.OnFontChangedListener;
 import com.pahanez.wallpaper.cpu.settings.OnSettingsChangedListener;
 import com.pahanez.wallpaper.cpu.settings.Settings;
 import com.pahanez.wallpaper.cpu.settings.SettingsHolder;
 
-public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener {
+public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener, OnFontChangedListener {
 
 	private static final String TAG = WallScene.class.getSimpleName();
 
 	private Stage mStage;
 	public final static int DEFAULT_FRAME_INTERVAL = 60;
-	private CustomFont mCustomFont ;
+//	private CustomFont mCustomFont ;
+	private BitmapFont font;
 	private Random mRandom = new Random();
 	private int mWidth;
 	private int mHeight;
@@ -81,8 +85,10 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 		@Override
 		public void draw(SpriteBatch batch, float parentAlpha) {
 			super.draw(batch, parentAlpha);
-			mCustomFont.getmCustomFont().setColor(getColor());
-			mCustomFont.getmCustomFont().draw(batch, value, getX() - mWidth/4, getY());
+//			mCustomFont.getmCustomFont().setColor(getColor());
+			font.setColor(getColor());
+			font.draw(batch, value, getX() - mWidth/4, getY());
+//			mCustomFont.getmCustomFont().draw();
 		}
 
 	}
@@ -104,12 +110,15 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 		mWidth = Gdx.graphics.getWidth();
 		mHeight = Gdx.graphics.getHeight();
 		
-		mCustomFont = new CustomFont();
+//		mCustomFont = new CustomFont();
+		font = new BitmapFont();
+		font.setScale(3);
 		new SettingsHolder();
 
 		mStage = new Stage(mWidth, mHeight, true);
 		
 		Settings.getInstance().registerOnSettingsChangedListener(this);
+		Settings.getInstance().registerOnFontChangedListener(this);
 		
 		onSettingsChanged();
 		ShaderProgram.pedantic = false;
@@ -221,6 +230,11 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 	public void onSettingsChanged() {
 		initActorList();
 		mBackgroundRenderer = SettingsHolder.mIsAnimatedBackground ? new AnimationRenderer() : new PlainRenderer();
+	}
+
+	@Override
+	public void fontChanged(int value) {
+		font.setScale(value + 1);
 	}
 	
 }

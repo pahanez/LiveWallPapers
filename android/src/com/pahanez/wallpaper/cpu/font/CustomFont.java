@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import android.app.Dialog;
 import android.graphics.BlurMaskFilter;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.badlogic.gdx.Gdx;
@@ -66,7 +67,7 @@ public class CustomFont implements OnFontChangedListener {
 	}
 
 	@Override
-	public void fontChanged(final Dialog d) {
+	public void fontChanged(int i) {/*
 		MainExecutor.getInstance().execute(new Runnable() {
 
 			@Override
@@ -75,17 +76,17 @@ public class CustomFont implements OnFontChangedListener {
 					d.dismiss();
 			}
 		});
-	}
+	*/}
 
 	private void createFont() {
 		size = mSettings.getFontSize();
 		file = mSettings.getFont();
-		
 		FileHandle fontFile = Gdx.files.internal(WConstants.FONTS_FOLDER + WConstants.FONT_FILES[file]);
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 		BitmapFont mustomFont = generator.generateFont((int) (mFontsFactor[getSize()] * one_cm));
 		setmCustomFont(mustomFont);
 		generator.dispose();
+		Log.e("p37td8", "createFont");
 		
 	}
 	
