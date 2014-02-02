@@ -47,7 +47,7 @@ public class TopParser {
 						if (s.contains("%"))
 							goal = s; 
 					}
-					if (!str.trim().isEmpty())
+					if (!str.trim().equals(""))
 						process.add("* " + tmp[0] + " : " + goal + " : " + tmp[tmp.length - 1] + " *");
 				}
 				return process;

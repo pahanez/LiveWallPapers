@@ -3,7 +3,6 @@ package com.pahanez.wallpaper.cpu.settings;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -24,15 +23,12 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.pahanez.wallpaper.cpu.MainExecutor;
-import com.pahanez.wallpaper.cpu.MainExecutor.CallBack;
 import com.pahanez.wallpaper.cpu.MainExecutor.Task;
 import com.pahanez.wallpaper.cpu.R;
 import com.pahanez.wallpaper.cpu.WConstants;
 import com.pahanez.wallpaper.cpu.utils.ColorPickerDialog;
 import com.pahanez.wallpaper.cpu.utils.ColorPickerDialog.OnColorChangedListener;
 import com.pahanez.wallpaper.cpu.utils.Util;
-import com.pahanez.wallpaper.cpu.utils.WLog;
 
 public class WallPaperSettings extends Activity implements OnCheckedChangeListener, OnClickListener, OnSeekBarChangeListener, OnColorChangedListener {
 
@@ -59,7 +55,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 	@Override
 	protected void onResume() {
 		super.onResume();
-		WLog.d(TAG, " onResume() ");
 		initUI();
 	}
 
@@ -166,7 +161,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 		switch (id) {
 
 		case ELEMENT_COUNT:
-			WLog.i(TAG, "ELEMENT_COUNT");
 			adb.setTitle(getString(R.string.element_count_tv));
 			View viewElementCount = (LinearLayout) getLayoutInflater().inflate(R.layout.settings_single_seekbar, null);
 			adb.setView(viewElementCount);
@@ -176,7 +170,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSeekValue = (TextView) viewElementCount.findViewById(R.id.val_seek_tv);
 			return adb.create();
 		case PROCESS_DIALOG:
-			WLog.i(TAG, "PROCESS_DIALOG");
 			adb.setTitle(getString(R.string.proces_count_tv));
 			View viewProcessQty = (LinearLayout) getLayoutInflater().inflate(R.layout.settings_single_seekbar, null);
 			adb.setView(viewProcessQty);
@@ -186,7 +179,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSeekValue = (TextView) viewProcessQty.findViewById(R.id.val_seek_tv);
 			return adb.create();
 		case TEXT_SIZE_DIALOG:
-			WLog.i(TAG, "TEXT_SIZE_DIALOG");
 			adb.setTitle(getString(R.string.textsize_choose));
 			View viewDataType = (LinearLayout) getLayoutInflater().inflate(R.layout.list_layout, null);
 			adb.setView(viewDataType);
@@ -194,7 +186,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			
 			return adb.create();
 		case FONTS_DIALOG:
-			WLog.i(TAG, "FONTS_DIALOG");
 			adb.setTitle(getString(R.string.fonts_menu));
 			View viewFont = (LinearLayout) getLayoutInflater().inflate(R.layout.list_layout, null);
 			adb.setView(viewFont);
@@ -229,13 +220,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 				convertView = view;
 			} else
 				ctv = (CheckedTextView) convertView.findViewById(android.R.id.text1);
-			Typeface tmpTypeFace = SettingsHolder.fonts[position];
-			switch (mCurrentType) {
-			case FONTS_DIALOG:
-				ctv.setTypeface(tmpTypeFace);
-				ctv.setHeight((int) getResources().getDimension(R.dimen.settings_main_item_height));
-				break;
-			}
 			ctv.setText(mValues[position]);
 			ctv.setHeight(100);
 			ctv.setTextColor(getResources().getColor(android.R.color.white));
@@ -261,7 +245,6 @@ public class WallPaperSettings extends Activity implements OnCheckedChangeListen
 			mSeekValue.setText(String.valueOf(mSettings.getElementsCount()));
 			break;
 		case TEXT_SIZE_DIALOG:
-			WLog.e("TEXT_SIZE_DIALOG");
 			
 			ArrayAdapter<String> adapterTextSize = new CustomAdapter(this, android.R.layout.simple_list_item_single_choice/*R.layout.checkedtextview*/, getResources().getStringArray(R.array.fonts_values),TEXT_SIZE_DIALOG);
 			mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

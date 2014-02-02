@@ -25,7 +25,7 @@
     <string name="main_settings">Main Settings</string>
     <string name="element_count_tv">Lines on Screen</string>
     <string name="proces_count_tv">Process Quantity</string>
-    <string name="cpu_loading">Loading…</string>
+    <string name="cpu_loading">Loading…</string> 
 
 
 

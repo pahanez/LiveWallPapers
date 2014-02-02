@@ -6,7 +6,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import java.util.ArrayList;
 import java.util.Random;
 
-import android.util.Log;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -28,7 +27,6 @@ import com.pahanez.wallpaper.cpu.settings.SettingsHolder;
 
 public class WallScene implements ApplicationListener, AndroidWallpaperListener,OnSettingsChangedListener, OnFontChangedListener {
 
-	private static final String TAG = WallScene.class.getSimpleName();
 
 	private Stage mStage;
 	public final static int DEFAULT_FRAME_INTERVAL = 60;
@@ -105,7 +103,6 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 
 	@Override
 	public void create() {
-		Gdx.app.log(TAG, "create()");
 
 		mWidth = Gdx.graphics.getWidth();
 		mHeight = Gdx.graphics.getHeight();
@@ -124,7 +121,6 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 		ShaderProgram.pedantic = false;
 		mShaderProgram = new ShaderProgram(VERT, FRAG);
 		if (mShaderProgram.isCompiled() == false) {
-			Gdx.app.log("wall", mShaderProgram.getLog());
 			Gdx.app.exit();
 		}
 		mSpriteBatch = new SpriteBatch();
@@ -177,7 +173,6 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 
 	@Override
 	public void resize(int width, int height) {
-		Gdx.app.log(TAG, "resize");
 		mShaderProgram.begin();
 		mShaderProgram.setUniformf("resolution", width, height);
 		mShaderProgram.end();
@@ -186,12 +181,10 @@ public class WallScene implements ApplicationListener, AndroidWallpaperListener,
 
 	@Override
 	public void pause() {
-		Gdx.app.log(TAG, "pause");
 	}
 
 	@Override
 	public void resume() {
-		Gdx.app.log(TAG, "resume");
 	}
 
 	@Override
